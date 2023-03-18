@@ -25,10 +25,10 @@ export const connection: IDatabaseConfig = {
     driver: "mongodb",
     protocol: "mongodb",
     url: process.env.DATABASE_URL as string,
-    host: "localhost",
+    host: "0.0.0.0",
     port: 27017,
     name: process.env.DATABASE_NAME as string,
-    username: "",
-    password: "",
+    username: "lms-user",
+    password: "lms123",
   },
 };

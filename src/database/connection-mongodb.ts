@@ -145,15 +145,16 @@ export default class MongoDbConnection implements IDatabaseAdapter {
     }
 
     try {
-      const insertOneOptions = options as InsertOneOptions;
-      insertOneOptions.writeConcern = {
-        w: "majority",
-      };
+      // const insertOneOptions = options as InsertOneOptions;
+      // insertOneOptions.writeConcern = {
+      //   w: "majority",
+      // };
+      // AGAR BISA SAYA HARUS KOMEN INI
 
       // inject date of created
       doc.createdAt = new Date();
 
-      const response = await this._collection.insertOne(doc, insertOneOptions);
+      const response = await this._collection.insertOne(doc);
 
       return {
         acknowledged: response.acknowledged,

@@ -28,7 +28,7 @@ export const connection: IDatabaseConfig = {
     host: "0.0.0.0",
     port: 27017,
     name: process.env.DATABASE_NAME as string,
-    username: "lms-user",
-    password: "lms123",
+    username: process.env.DATABASE_USERNAME as string,
+    password: process.env.DATABASE_PASSWORD as string,
   },
 };

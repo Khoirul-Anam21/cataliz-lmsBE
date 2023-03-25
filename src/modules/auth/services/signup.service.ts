@@ -8,7 +8,7 @@ export class SignupUserService {
   }
   public async handle(username: string, email: string, password: string) {
     const userRepository = new UserRepository(this.db);
-    const result = await userRepository.create({ username, email, password });
+    const result = await userRepository.create({ username, email, password, role: "student" });
 
     return {
       id: result._id,

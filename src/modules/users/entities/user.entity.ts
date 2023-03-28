@@ -3,13 +3,11 @@ import { ObjectId } from "mongodb";
 export interface UserInterface {
   _id?: string | ObjectId;
   name?: string;
-  role?: string;
-  username?: string;
   email?: string;
   password?: string;
+  job?: string;
+  photo?: string;
   role_id?: string | ObjectId;
-  emailVerificationCode?: string;
-  isEmailVerified?: boolean;
 }
 
 export const restricted = ["password"];
@@ -19,9 +17,5 @@ export class UserEntity {
 
   constructor(user: UserInterface) {
     this.user = user;
-  }
-
-  public generateEmailVerificationCode() {
-    this.user.emailVerificationCode = "";
   }
 }

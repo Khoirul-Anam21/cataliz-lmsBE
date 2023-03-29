@@ -18,8 +18,8 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
       _id: result._id,
       name: result.name,
       email: result.email,
-      username: result.username,
-      role: result.role,
+      job: result.job,
+      photo: result.photo,
     });
   } catch (error) {
     next(error);

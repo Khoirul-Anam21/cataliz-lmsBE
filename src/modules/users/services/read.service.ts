@@ -1,3 +1,5 @@
+import { UserInterface } from "../entities/user.entity";
+import { UserRepository } from "../repositories/user.repository.js";
 import DatabaseConnection from "@src/database/connection.js";
 
 export class ReadUserService {
@@ -5,13 +7,17 @@ export class ReadUserService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(id: string, options: any) {
+  public async handle(id: string) {
+    const userRepository = new UserRepository(this.db);
+    const user: UserInterface = await userRepository.read(id);
     return {
-      _id: "user._id",
-      name: "user.name",
-      email: "user.email",
-      username: "user.username",
-      role: "user.role",
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      job: user.job,
+      photo: user.photo,
     };
   }
 }

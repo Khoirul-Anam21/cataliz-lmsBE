@@ -7,7 +7,7 @@ export interface UserInterface {
   password?: string;
   job?: string;
   photo?: string;
-  role_id?: string | ObjectId;
+  role?: string;
 }
 
 export const restricted = ["password"];

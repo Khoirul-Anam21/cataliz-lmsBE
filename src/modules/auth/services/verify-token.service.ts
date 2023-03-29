@@ -32,8 +32,8 @@ export class VerifyTokenUserService {
       _id: user._id,
       name: user.name,
       email: user.email,
-      username: user.username,
-      role: user.role,
+      job: user.job,
+      photo: user.photo,
     };
   }
 }

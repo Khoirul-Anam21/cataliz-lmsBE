@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb";
 
-export interface CourseInterface {
-  _id?: string | ObjectId;
-  courseId?: string | ObjectId; //fk
+export interface CourseContent {
+  _id?: number | ObjectId;
+  courseId?: number | ObjectId;
   title?: string;
   source: string;
   type: string;
@@ -10,10 +10,10 @@ export interface CourseInterface {
   isComplete: boolean;
 }
 
-export class CourseEntity {
-  public course: CourseInterface;
+export class CourseContentEntity {
+  public coursecontent: CourseContent;
 
-  constructor(course: CourseInterface) {
-    this.course = course;
+  constructor(coursecontent: CourseContent) {
+    this.coursecontent = coursecontent;
   }
 }

@@ -1,11 +1,11 @@
 import { ObjectId } from "mongodb";
 
 export interface CourseInterface {
-  _id?: string | ObjectId;
-  user_id?: string | ObjectId;
+  _id?: number | ObjectId;
+  user_id?: number | ObjectId;
   thumbnail?: string;
   title?: string;
-  category_id?: string | ObjectId;
+  category_id?: number | ObjectId;
   purpose: string;
   published: boolean;
   description: string;

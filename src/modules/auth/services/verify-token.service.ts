@@ -24,9 +24,7 @@ export class VerifyTokenUserService {
     }
 
     const readUserService = new ReadUserService(this.db);
-    const user: UserInterface = (await readUserService.handle(result.sub, {
-      restrictedFields: ["password"],
-    })) as UserInterface;
+    const user: UserInterface = (await readUserService.handle(result.sub)) as UserInterface;
 
     return {
       _id: user._id,

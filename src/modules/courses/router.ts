@@ -6,7 +6,7 @@ const router = Router();
 // Course
 router.get("/", controller.readMany);   
 router.get("/:id", controller.readMany);   
-router.post("/", controller.readMany);   
+router.post("/", controller.create);   
 router.put("/:id", controller.readMany);   
 router.put("/course-publish/:id", controller.readMany);   
 router.put("/courses/:id", controller.readMany);   

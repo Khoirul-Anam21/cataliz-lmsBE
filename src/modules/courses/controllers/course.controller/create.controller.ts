@@ -3,7 +3,7 @@ import { CreateCourseService } from "../../services/course.service/create-course
 // import { validate } from "../request/signin.request.js";
 import { db } from "@src/database/database.js";
 
-export const addCourse = async (req: Request, res: Response, next: NextFunction) => {
+export const create = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // validate(req.body);
 

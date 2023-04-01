@@ -1,8 +1,6 @@
 import { IDatabaseAdapter } from "@src/database/connection";
 
-export const name = "users";
-
-export const restrictedFields = ["password"];
+export const name = "courses";
 
 const isExists = async (db: IDatabaseAdapter) => {
   const collections = (await db.listCollections()) as [];
@@ -19,13 +17,36 @@ export async function createCollection(db: IDatabaseAdapter) {
 
     await db.updateSchema(name, {
       bsonType: "object",
-      required: ["email"],
       properties: {
-        username: {
+        user_id: {
           bsonType: "string",
           description: "must be a string",
         },
-        email: {
+        thumbnail: {
+          bsonType: "string",
+          description: "must be a string",
+        },
+        title: {
+          bsonType: "string",
+          description: "must be a string",
+        },
+        category_id: {
+          bsonType: "string",
+          description: "must be a string",
+        },
+        purpose: {
+          bsonType: "string",
+          description: "must be a string",
+        },
+        published: {
+          bsonType: "boolean",
+          description: "must be a boolean",
+        },
+        description: {
+          bsonType: "string",
+          description: "must be a string",
+        },
+        totalDuration: {
           bsonType: "string",
           description: "must be a string",
         },

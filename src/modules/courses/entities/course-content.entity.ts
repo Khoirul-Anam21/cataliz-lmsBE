@@ -6,7 +6,7 @@ export interface CourseInterface {
   thumbnail?: string;
   title?: string;
   category_id?: number | ObjectId;
-  purpose: string[];
+  purpose: string;
   published: boolean;
   description: string;
   totalDuration: number;

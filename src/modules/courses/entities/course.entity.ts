@@ -6,10 +6,10 @@ export interface CourseInterface {
   thumbnail?: string;
   title?: string;
   category_id?: number | ObjectId;
-  purpose: string[];
-  published: boolean;
-  description: string;
-  totalDuration: number;
+  purpose?: string[];
+  published?: boolean;
+  description?: string;
+  totalDuration?: number;
 }
 
 export class CourseEntity {

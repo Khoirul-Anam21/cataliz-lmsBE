@@ -23,6 +23,7 @@ export class UserRepository extends BaseRepository {
     return await this.collection().create(doc, options);
   }
 
+
   public async read(id: string, options?: ReadOptionsInterface): Promise<ReadResultInterface> {
     return await this.collection().read(id, options);
   }

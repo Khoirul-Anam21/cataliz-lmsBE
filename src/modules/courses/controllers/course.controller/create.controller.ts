@@ -7,9 +7,9 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
   try {
     // validate(req.body);
 
-    const signupUserService = new CreateCourseService(db);
+    const createCourseService = new CreateCourseService(db);
 
-    const result = await signupUserService.handle(
+    const result = await createCourseService.handle(
         req.body.title,
         req.body.category_id,
         req.body.thumbnail,

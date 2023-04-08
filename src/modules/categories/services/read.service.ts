@@ -1,5 +1,5 @@
-import { CategoryInterface } from "../entities/category.entity";
-import { CategoryRepository } from "../repositories/category.repository.js";
+import { CategoryInterface } from "../../entities/category.entity";
+import { CategoryRepository } from "../../repositories/category.repository.js";
 import DatabaseConnection from "@src/database/connection.js";
 
 export class ReadCategoryService {

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { CategoryInterface } from "../entities/category.entity";
-import { ReadCategoryService } from "../services/read.service.js";
+import { CategoryInterface } from "../../entities/category.entity";
+import { ReadCategoryService } from "../../services/read.service.js";
 import { db } from "@src/database/database.js";
 
 export const read = async (req: Request, res: Response, next: NextFunction) => {

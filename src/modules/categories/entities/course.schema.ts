@@ -18,39 +18,7 @@ export async function createCollection(db: IDatabaseAdapter) {
     await db.updateSchema(name, {
       bsonType: "object",
       properties: {
-        user_id: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        thumbnail: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        title: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        category_id: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        purpose: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        published: {
-          bsonType: "boolean",
-          description: "must be a boolean",
-        },
-        description: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        totalDuration: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        password: {
+        name: {
           bsonType: "string",
           description: "must be a string",
         },

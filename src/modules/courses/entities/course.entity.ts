@@ -1,8 +1,9 @@
 import { ObjectId } from "mongodb";
+import { UserInterface } from "@src/modules/users/entities/user.entity";
 
 export interface CourseInterface {
   _id?: number | ObjectId;
-  user_id?: number | ObjectId;
+  user?: UserInterface;
   thumbnail?: string;
   title?: string;
   category_id?: number | ObjectId;

@@ -14,7 +14,7 @@ export class ReadCourseService {
 
     return {
       _id: result._id,
-      user_id: result.user_id,
+      user: result.user,
       title: result.title,
       category_id: result.category_id,
       thumbnail: result.thumbnail,

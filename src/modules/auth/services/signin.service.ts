@@ -10,10 +10,10 @@ export class SigninUserService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(username: string, password: string) {
+  public async handle(email: string, password: string) {
     const iQuery: QueryInterface = {
       fields: "",
-      filter: { username: username },
+      filter: { email: email },
       page: 1,
       pageSize: 1,
       sort: "",
@@ -37,7 +37,6 @@ export class SigninUserService {
     return {
       name: result.data[0].name,
       email: result.data[0].email,
-      username: result.data[0].username,
       role: result.data[0].role,
       accessToken: accessToken,
       refreshToken: refreshToken,

@@ -1,14 +1,14 @@
 import { ObjectId } from "mongodb";
 
-export interface Category {
-    _id: number | ObjectId;
+export interface CategoryInterface {
+    _id: string | ObjectId;
     name: string;
   }
 
 export class categoryEntity {
-  public category: Category;
+  public category: CategoryInterface;
 
-  constructor(category: Category) {
+  constructor(category: CategoryInterface) {
     this.category = category;
   }
 }

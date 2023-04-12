@@ -1,21 +1,17 @@
 import { ObjectId } from "mongodb";
 
-export interface UserInterface {
+export interface UserAuthInterface {
   _id?: string | ObjectId;
   username?: string;
   email?: string;
-  password?: string;
-  job?: string;
-  photo?: string;
-  role?: string;
 }
 
 export const restricted = ["password"];
 
 export class UserEntity {
-  public user: UserInterface;
+  public user: UserAuthInterface;
 
-  constructor(user: UserInterface) {
+  constructor(user: UserAuthInterface) {
     this.user = user;
   }
 }

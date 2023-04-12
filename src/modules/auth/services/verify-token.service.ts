@@ -1,7 +1,7 @@
 import { ApiError } from "@point-hub/express-error-handler";
 import { secretKey } from "@src/config/auth.js";
 import DatabaseConnection from "@src/database/connection.js";
-import { UserInterface } from "@src/modules/users/entities/user.entity";
+import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity";
 import { ReadUserService } from "@src/modules/users/services/read.service.js";
 import { verifyToken } from "@src/utils/jwt.js";
 
@@ -24,14 +24,12 @@ export class VerifyTokenUserService {
     }
 
     const readUserService = new ReadUserService(this.db);
-    const user: UserInterface = (await readUserService.handle(result.sub)) as UserInterface;
+    const user: UserAuthInterface = (await readUserService.handle(result.sub)) as UserAuthInterface;
 
     return {
       _id: user._id,
-      name: user.name,
+      username: user.username,
       email: user.email,
-      job: user.job,
-      photo: user.photo,
     };
   }
 }

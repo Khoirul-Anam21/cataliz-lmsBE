@@ -18,9 +18,11 @@ export class SigninUserService {
       pageSize: 1,
       sort: "",
     };
+    
 
     const userRepository = new UserRepository(this.db);
     const result = (await userRepository.readMany(iQuery)) as any;
+    
 
     let isVerified = false;
     if (result.pagination.totalDocument === 1) {
@@ -33,6 +35,11 @@ export class SigninUserService {
 
     const accessToken = signNewToken(issuer, secretKey, result.data[0]._id);
     const refreshToken = generateRefreshToken(issuer, secretKey, result.data[0]._id);
+
+    
+    // add token to database
+    await userRepository.update(result.data[0]._id, { accessToken, refreshToken });
+
 
     return {
       name: result.data[0].name,

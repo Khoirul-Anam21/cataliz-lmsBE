@@ -12,7 +12,7 @@ export class ReadUserService {
     const user: UserInterface = await userRepository.read(id);
     return {
       _id: user._id,
-      name: user.name,
+      username: user.username,
       email: user.email,
       password: user.password,
       role: user.role,

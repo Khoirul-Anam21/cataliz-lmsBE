@@ -6,6 +6,7 @@ const router = Router();
 router.get("/categories", controller.readMany);
 router.get("/categories/:id", controller.read);
 // router.post("/", controller.invite);
+router.post("/categories/create", controller.create);
 router.patch("/categories/update/:id", controller.update);
 router.delete("/categories/delete/:id", controller.destroy);
 

@@ -1,9 +1,9 @@
 import { ObjectId } from "mongodb";
-import { UserInterface } from "@src/modules/users/entities/user.entity";
+import { UserDisplayInterface } from "@src/modules/users/entities/user-display.entity.js";
 
 export interface CourseInterface {
   _id?: number | ObjectId;
-  user?: UserInterface;
+  facilitator?: UserDisplayInterface;
   thumbnail?: string;
   title?: string;
   category_id?: number | ObjectId;

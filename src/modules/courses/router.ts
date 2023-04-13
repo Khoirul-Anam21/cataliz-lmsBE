@@ -9,16 +9,16 @@ const router = Router();
 
 // Course
 router.get("/", controller.readMany); // done tinggal category
-router.get("/:id", authController.authorizeToken, controller.read);   
-router.post("/", upload.any(), controller.create);   // done
+router.get("/:id", authController.authorizeToken, controller.read);   // tambah jika auth maka tampil sebagian
+router.post("/", authController.authorizeToken, upload.any(), controller.create);   // done
 router.put("/:id", controller.update);  // done
 router.delete("/:id", controller.destroy);  // done
 router.put("/course-publish/:id", controller.readMany);   
 router.put("/courses/:id", controller.readMany);   
-router.get("/student/learnings", cParticipantController.create);   
-router.post("/student/learnings", cParticipantController.create);
+router.get("/student/learnings", authController.authorizeToken, cParticipantController.readMany);  // done
+router.post("/student/learnings", authController.authorizeToken, cParticipantController.create); // otw
 router.get("/facil/learnings", controller.read);
-router.get("/course-participant/:id", controller.read);
+router.get("/course-participant/:id", controller.read); 
 
 // Course content
 

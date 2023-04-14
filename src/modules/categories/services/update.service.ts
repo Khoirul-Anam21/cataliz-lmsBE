@@ -6,7 +6,7 @@ export class UpdateCategoryService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(id: string, name: string) {
+  public async handle(id: string, name?: string) {
     const categoryRepository = new CategoryRepository(this.db);
     await categoryRepository.update(id, { 
         name,

@@ -6,8 +6,8 @@ import { db } from "@src/database/database.js";
 export const read = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const readCategoryService = new ReadCategoryService(db);
-    const result = await readCategoryService.handle(req.params.id);
-    res.status(200).json({});
+    const result: CategoryInterface = await readCategoryService.handle(req.params.id);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }

@@ -3,8 +3,10 @@ import { NextFunction, Request, Response } from "express";
 import { VerifyTokenUserService } from "../services/verify-token.service.js";
 import { db } from "@src/database/database.js";
 import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity.js";
+import { UserInterface } from "@src/modules/users/entities/user.entity.js";
+import { ReadUserService } from "@src/modules/users/services/read.service.js";
 
-export const authorizeToken = async (req: Request, res: Response, next: NextFunction) => {
+export const authorizeStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorizationHeader = req.headers.authorization ?? "";
 
@@ -14,6 +16,14 @@ export const authorizeToken = async (req: Request, res: Response, next: NextFunc
 
     const verifyTokenUserService = new VerifyTokenUserService(db);
     const result: UserAuthInterface = await verifyTokenUserService.handle(authorizationHeader);
+
+    // check user
+    const id = result._id ?? "";
+    const readUserService = new ReadUserService(db);
+    const user: UserInterface = await readUserService.handle(id);
+
+    if (!user) throw new ApiError(401);
+    if (user.role !== 'student') throw new ApiError(401, {msg: "must login as student"});
 
     res.locals.credential = result;
 

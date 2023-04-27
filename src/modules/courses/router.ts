@@ -19,7 +19,7 @@ router.put("/courses/:id", controller.readMany);
 router.get("/student/learnings", authController.authorizeStudent, cParticipantController.readMany);  // done
 router.post("/student/learnings", authController.authorizeStudent, cParticipantController.create); // done
 router.get("/facil/learnings", authController.authorizeFacil, cFacilitatorController.readMany); // done
-router.get("/course-participant/:id", controller.read); // otw
+router.get("/course-participant/:id", controller.readManyParticipant); // otw
 
 // Course content
 

@@ -14,12 +14,11 @@ router.get("/:id", authController.authorizeStudent, controller.read);   // tamba
 router.post("/", authController.authorizeFacil, upload.single('thumbnail'), controller.create);   // done
 router.put("/:id", controller.update);  // done
 router.delete("/:id", controller.destroy);  // done
-router.put("/course-publish/:id", controller.readMany);   
-router.put("/courses/:id", controller.readMany);   
+router.put("/course-publish/:id", controller.publishCourse);    // done
 router.get("/student/learnings", authController.authorizeStudent, cParticipantController.readMany);  // done
 router.post("/student/learnings", authController.authorizeStudent, cParticipantController.create); // done
 router.get("/facil/learnings", authController.authorizeFacil, cFacilitatorController.readMany); // done
-router.get("/course-participant/:id", controller.readManyParticipant); // otw
+router.get("/course-participant/:id", authController.authorizeFacil, controller.readManyParticipant); // done
 
 // Course content
 

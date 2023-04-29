@@ -3,6 +3,7 @@ import DatabaseConnection from "@src/database/connection.js";
 import { UserDisplayInterface } from "@src/modules/users/entities/user-display.entity.js";
 import { UserRepository } from "@src/modules/users/repositories/user.repository.js";
 import BackBlazeService from "@src/services/bb-cloud-storage/index.js";
+import uploader, { deleteFileAfterUpload } from "@src/services/cloudinary-storage/index.js";
 
 export class CreateCourseService {
     private db: DatabaseConnection;
@@ -13,6 +14,11 @@ export class CreateCourseService {
         const courseRepository = new CourseRepository(this.db);
         const userRepository = new UserRepository(this.db);
 
+        const fileUpload = thumbnailPath?.path ?? ""
+
+        const cldUploader = await uploader.upload(fileUpload);
+        
+        await deleteFileAfterUpload(fileUpload);
         // const bbService = new BackBlazeService();
         // const bbAuth = await bbService.authorize();
 
@@ -36,7 +42,7 @@ export class CreateCourseService {
             },
             title,
             category_id,
-            thumbnailPath,
+            thumbnail: cldUploader.url,
             purpose,
             description,
             content: 0,

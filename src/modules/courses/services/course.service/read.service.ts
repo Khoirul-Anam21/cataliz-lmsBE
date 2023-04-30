@@ -1,3 +1,4 @@
+import { ApiError } from "@point-hub/express-error-handler";
 import { CourseInterface } from "../../entities/course.entity";
 import { CourseRepository } from "../../repositories/course.repository.js";
 import DatabaseConnection from "@src/database/connection.js";
@@ -7,10 +8,15 @@ export class ReadCourseService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(id: string, options?: any) {
+  public async handle(id: string) {
 
     const courseRepository = new CourseRepository(this.db);
     const result: CourseInterface = await courseRepository.read(id);
+
+    if (!result) {
+      console.log("Result not found");
+      throw new ApiError(404)
+    }
 
     return {
       _id: result._id,
@@ -26,12 +32,3 @@ export class ReadCourseService {
   }
 }
 
-// _id?: number | ObjectId;
-// user_id?: number | ObjectId;
-// thumbnail?: string;
-// title?: string;
-// category_id?: number | ObjectId;
-// purpose: string[];
-// published: boolean;
-// description: string;
-// totalDuration: number;

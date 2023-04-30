@@ -4,23 +4,35 @@ import * as authController from "../auth/controllers/index.js"
 import * as cFacilitatorController from "./controllers/course-facilitator.controller/index.js";
 import * as cParticipantController from "./controllers/course-participant.controller/index.js"; 
 import * as controller from "./controllers/course.controller/index.js";
-const upload = multer()
+const upload = multer({ dest: 'uploads/' });
 
-const router = Router();
+const courseRouter = Router();
+const courseContentRouter = Router();
+
 
 // Course
-router.get("/", controller.readMany); // done tinggal category
-router.get("/:id", authController.authorizeStudent, controller.read);   // tambah jika auth maka tampil sebagian
-router.post("/", authController.authorizeFacil, upload.single('thumbnail'), controller.create);   // done
-router.put("/:id", controller.update);  // done
-router.delete("/:id", controller.destroy);  // done
-router.put("/course-publish/:id", controller.readMany);   
-router.put("/courses/:id", controller.readMany);   
-router.get("/student/learnings", authController.authorizeStudent, cParticipantController.readMany);  // done
-router.post("/student/learnings", authController.authorizeStudent, cParticipantController.create); // done
-router.get("/facil/learnings", authController.authorizeFacil, cFacilitatorController.readMany); // done
-router.get("/course-participant/:id", controller.read); // otw
+courseRouter.get("/", controller.readMany); // done tinggal category
+courseRouter.get("/:id", authController.authorizeStudent, controller.read);   // tambah jika auth maka tampil sebagian
+courseRouter.post("/", authController.authorizeFacil, upload.single('thumbnail'), controller.create);   // done
+courseRouter.put("/:id", controller.update);  // done
+courseRouter.delete("/:id", controller.destroy);  // done
+courseRouter.put("/course-publish/:id", controller.publishCourse);    // done
+courseRouter.get("/student/learnings", authController.authorizeStudent, cParticipantController.readMany);  // done
+courseRouter.post("/student/learnings", authController.authorizeStudent, cParticipantController.create); // done
+courseRouter.get("/facil/learnings", authController.authorizeFacil, cFacilitatorController.readMany); // done
+courseRouter.get("/course-participant/:id", authController.authorizeFacil, controller.readManyParticipant); // done
 
-// Course content
+// course content
+courseContentRouter.get("/student/:id");
+courseContentRouter.get("/facil/:id");
+courseContentRouter.post("/");
+courseContentRouter.patch("/:id");
+courseContentRouter.delete("/:id");
+courseContentRouter.post("/assignments");
+courseContentRouter.get("/assignments");
+courseContentRouter.post("/assignment-submit/:id");
+courseContentRouter.patch("/assignment-grade/:id");
 
-export default router;
+
+
+export { courseRouter, courseContentRouter }

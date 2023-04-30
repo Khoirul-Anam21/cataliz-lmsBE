@@ -9,7 +9,7 @@ export class ReadManyCourseService {
   public async handle(limit: any = 20, page: any = 1, category?: any) {
     const iQuery: QueryInterface = {
       fields: "",
-      filter: { category },
+      filter: { category, published: true }, // hanya yg terpublish yg tampil
       page: page,
       pageSize: limit,
       sort: "",

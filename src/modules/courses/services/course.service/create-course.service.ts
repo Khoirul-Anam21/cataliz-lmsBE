@@ -2,7 +2,6 @@ import { CourseRepository } from "../../repositories/course.repository.js"
 import DatabaseConnection from "@src/database/connection.js";
 import { UserDisplayInterface } from "@src/modules/users/entities/user-display.entity.js";
 import { UserRepository } from "@src/modules/users/repositories/user.repository.js";
-import BackBlazeService from "@src/services/bb-cloud-storage/index.js";
 import uploader, { deleteFileAfterUpload } from "@src/services/cloudinary-storage/index.js";
 
 export class CreateCourseService {
@@ -30,7 +29,7 @@ export class CreateCourseService {
         
          
 
-        const user: UserDisplayInterface = await userRepository.read(userId) // tes
+        const user: UserDisplayInterface = await userRepository.read(userId) 
 
 
         const result = await courseRepository.create({

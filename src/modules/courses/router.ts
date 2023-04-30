@@ -4,7 +4,7 @@ import * as authController from "../auth/controllers/index.js"
 import * as cFacilitatorController from "./controllers/course-facilitator.controller/index.js";
 import * as cParticipantController from "./controllers/course-participant.controller/index.js"; 
 import * as controller from "./controllers/course.controller/index.js";
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'uploads/' });
 
 const courseRouter = Router();
 const courseContentRouter = Router();

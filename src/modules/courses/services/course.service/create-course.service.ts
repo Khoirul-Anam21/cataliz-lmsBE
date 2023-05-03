@@ -14,20 +14,9 @@ export class CreateCourseService {
         const userRepository = new UserRepository(this.db);
 
         const fileUpload = thumbnailPath?.path ?? ""
-
         const cldUploader = await uploader.upload(fileUpload);
         
         await deleteFileAfterUpload(fileUpload);
-        // const bbService = new BackBlazeService();
-        // const bbAuth = await bbService.authorize();
-
-        // console.log(thumbnailPath.buffer);
-        // // TODO: upload file
-        // const uploadUrl = await bbService.getUploadUrl("24ffaec28fc595db8f720b12");
-        // const res = await bbService.upload('tes.jpg', Buffer.from(thumbnailPath.buffer), uploadUrl, bbAuth)
-        // console.log(res);
-        
-         
 
         const user: UserDisplayInterface = await userRepository.read(userId) 
 

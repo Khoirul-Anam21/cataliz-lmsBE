@@ -14,7 +14,7 @@ export class CreateCourseService {
         const userRepository = new UserRepository(this.db);
 
         const fileUpload = thumbnailPath?.path ?? ""
-        const cldUploader = await uploader.upload(fileUpload);
+        const uploadResult = await uploader.upload(fileUpload);
         
         await deleteFileAfterUpload(fileUpload);
 
@@ -30,7 +30,7 @@ export class CreateCourseService {
             },
             title,
             category_id,
-            thumbnail: cldUploader.url,
+            thumbnail: uploadResult.url,
             purpose,
             description,
             content: 0,

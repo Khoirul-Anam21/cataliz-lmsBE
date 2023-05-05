@@ -1,8 +1,9 @@
 import { Router } from "express";
 import multer from 'multer';
 import * as authController from "../auth/controllers/index.js"
+import * as courseContentController from "./controllers/course-content.controller/index.js"; 
 import * as cFacilitatorController from "./controllers/course-facilitator.controller/index.js";
-import * as cParticipantController from "./controllers/course-participant.controller/index.js"; 
+import * as cParticipantController from "./controllers/course-participant.controller/index.js";
 import * as controller from "./controllers/course.controller/index.js";
 const upload = multer({ dest: 'uploads/' });
 
@@ -25,7 +26,7 @@ courseRouter.get("/course-participant/:id", authController.authorizeFacil, contr
 // course content
 courseContentRouter.get("/student/:id");
 courseContentRouter.get("/facil/:id");
-courseContentRouter.post("/");
+courseContentRouter.post("/", upload.single('material'), courseContentController.create);
 courseContentRouter.patch("/:id");
 courseContentRouter.delete("/:id");
 courseContentRouter.post("/assignments");

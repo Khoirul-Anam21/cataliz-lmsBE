@@ -1,21 +1,33 @@
 import { ObjectId } from "mongodb";
 
-export interface CourseInterface {
+export interface CourseDisplayInterface {
   _id?: number | ObjectId;
-  user_id?: number | ObjectId;
-  thumbnail?: string;
   title?: string;
-  category_id?: number | ObjectId;
-  purpose: string;
-  published: boolean;
-  description: string;
-  totalDuration: number;
+  facilitator: any;
+  contents: any[];
 }
 
-export class CourseEntity {
-  public course: CourseInterface;
+export enum MaterialType {
+  Video,
+  Reading
+}
+export interface CourseContentInterface {
+  _id?: number | ObjectId;
+  course?: CourseDisplayInterface;
+  thumbnail?: string;
+  title?: string;
+  material: string;
+  type: string;
+  description: string;
+  assignment: any;
+  certificate: string;
+  isComplete: boolean   
+}
 
-  constructor(course: CourseInterface) {
+export class CourseContentEntity {
+  public course: CourseContentInterface;
+
+  constructor(course: CourseContentInterface) {
     this.course = course;
   }
 }

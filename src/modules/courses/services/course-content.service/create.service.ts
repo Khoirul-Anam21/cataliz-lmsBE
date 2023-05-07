@@ -4,6 +4,7 @@ import { CourseRepository } from "../../repositories/course.repository.js";
 import DatabaseConnection from "@src/database/connection.js";
 import uploader, { deleteFileAfterUpload } from "@src/services/cloudinary-storage/index.js";
 import { getType } from "@src/utils/material-type.js";
+import { getVideoDuration } from "@src/utils/video-duration.js";  
 
 export class CreateCourseContentService {
     private db: DatabaseConnection;
@@ -14,35 +15,52 @@ export class CreateCourseContentService {
         const courseContentRepository = new CourseContentRepository(this.db);
         const courseRepository = new CourseRepository(this.db);
         // TODO: Validate
- 
+
         // Upload file
         const fileUpload = material?.path;
         if (!fileUpload) throw new ApiError(400)
 
-        const uploadResult = await uploader.upload(fileUpload, { folder: "content-materials" });
+        // check if a video or not
+        const uploadResult = getType(material.mimetype) == "video" ? 
+            await uploader.upload(fileUpload, { folder: "content-materials", resource_type: "video" }) : 
+            await uploader.upload(fileUpload, { folder: "content-materials" });
 
-        await deleteFileAfterUpload(fileUpload);
 
         // get url
         const fileUrl: string = uploadResult.url;
+
+        // count video duration
+        const type: string = getType(material.mimetype);
+
+        const totalDuration = await getVideoDuration(material); 
+        // const totalDuration: number = type == "video" ? await getVideoDurationInSeconds(material?.path) : 0;
+        console.log(totalDuration);
+
+        await deleteFileAfterUpload(fileUpload);
+ 
 
         // transaction wrapper
         const session: any = this.db.startSession()
 
         try {
-            await session.startTransaction()
 
+            console.log("Entering Transaction");
+            
+            await session.startTransaction()
+  
             const course = await courseRepository.read(course_id, {
                 projection: {
                     _id: 1,
                     title: 1,
                     facilitator: 1,
                     thumbnail: 1,
-                    contents: 1
-                }, session
+                    contents: 1,
+                    content: 1,
+                }, session 
             });
 
-            console.log(material);
+            console.log("Second Phase");
+
 
             const result = await courseContentRepository.create({
                 course: {
@@ -50,26 +68,35 @@ export class CreateCourseContentService {
                     title: course.title,
                     facilitator: course.facilitator
                 },
+                title,
                 thumbnail: course.thumbnail,
                 material: fileUrl,
-                type: getType(material.mimetype),
+                duration: totalDuration,
+                type,
                 description,
                 assignment: null,
                 isComplete: false
             }, { session });
 
             const contents: any = course.contents;
+            const content: any = course.content;
+
+            console.log("Third phase");
+            
 
             await courseRepository.update(course_id, {
+                content: content + 1,
                 contents: [...contents, ...[{
                     _id: result._id,
                     title,
-                    type: getType(material.mimetype),
+                    type,
                     isComplete: false
-                }]]
+                }]],
+                totalDuration
             }, { session });
 
-            console.log("Transaction Success"); 
+            console.log("Transaction Success");
+            
             await session.commitTransaction();
             await session.endSession()
 

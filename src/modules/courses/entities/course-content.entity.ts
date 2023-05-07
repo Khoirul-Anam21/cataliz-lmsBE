@@ -18,9 +18,9 @@ export interface CourseContentInterface {
   title?: string;
   material: string;
   type: string;
+  duration: number;
   description: string;
   assignment: any;
-  certificate: string;
   isComplete: boolean   
 }
 

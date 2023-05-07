@@ -1,6 +1,6 @@
 import { IDatabaseAdapter } from "@src/database/connection";
 
-export const name = "courses";
+export const name = "courseContent";
 
 const isExists = async (db: IDatabaseAdapter) => {
   const collections = (await db.listCollections()) as [];
@@ -18,9 +18,9 @@ export async function createCollection(db: IDatabaseAdapter) {
     await db.updateSchema(name, {
       bsonType: "object",
       properties: {
-        user_id: {
-          bsonType: "string",
-          description: "must be a string",
+        course: {
+          bsonType: "object",
+          description: "must be an object",
         },
         thumbnail: {
           bsonType: "string",
@@ -30,29 +30,29 @@ export async function createCollection(db: IDatabaseAdapter) {
           bsonType: "string",
           description: "must be a string",
         },
-        category_id: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        purpose: {
-          bsonType: "string",
-          description: "must be a string",
-        },
-        published: {
-          bsonType: "boolean",
-          description: "must be a boolean",
-        },
         description: {
           bsonType: "string",
           description: "must be a string",
         },
-        totalDuration: {
+        material: {
           bsonType: "string",
           description: "must be a string",
         },
-        password: {
+        duration: {
+          bsonType: "number",
+          description: "must be a number",
+        },
+        type: {
           bsonType: "string",
           description: "must be a string",
+        },
+        assignment: {
+          bsonType: "object",
+          description: "must be an object",
+        },
+        isComplete: {
+          bsonType: "boolean",
+          description: "must be a boolean",
         },
       },
     });

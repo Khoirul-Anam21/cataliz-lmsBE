@@ -36,7 +36,8 @@ export class CreateCourseService {
             content: 0,
             totalDuration: 0,
             published: false,
-            contents: []
+            contents: [],
+            certificate: null,
         });
 
         return {

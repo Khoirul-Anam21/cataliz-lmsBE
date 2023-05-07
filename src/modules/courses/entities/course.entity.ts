@@ -11,6 +11,7 @@ export interface CourseInterface {
   published?: boolean;
   description?: string;
   totalDuration?: number;
+  certificate?: null
 }
 
 export class CourseEntity {

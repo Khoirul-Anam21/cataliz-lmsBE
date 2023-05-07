@@ -5,6 +5,7 @@ import * as courseContentController from "./controllers/course-content.controlle
 import * as cFacilitatorController from "./controllers/course-facilitator.controller/index.js";
 import * as cParticipantController from "./controllers/course-participant.controller/index.js";
 import * as controller from "./controllers/course.controller/index.js";
+
 const upload = multer({ dest: 'uploads/' });
 
 const courseRouter = Router();
@@ -24,9 +25,9 @@ courseRouter.get("/facil/learnings", authController.authorizeFacil, cFacilitator
 courseRouter.get("/course-participant/:id", authController.authorizeFacil, controller.readManyParticipant); // done
 
 // course content
-courseContentRouter.get("/student/:id");
-courseContentRouter.get("/facil/:id");
-courseContentRouter.post("/", upload.single('material'), courseContentController.create);
+courseContentRouter.get("/student/:id", authController.authorizeStudent, courseContentController.readCourseContentParticipant);
+courseContentRouter.get("/facil/:id", authController.authorizeFacil, courseContentController.readCourseContentFacilitator);
+courseContentRouter.post("/", authController.authorizeFacil, upload.single('material'), courseContentController.create);
 courseContentRouter.patch("/:id");
 courseContentRouter.delete("/:id");
 courseContentRouter.post("/assignments");

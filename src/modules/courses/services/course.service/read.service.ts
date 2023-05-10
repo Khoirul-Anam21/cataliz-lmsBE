@@ -11,7 +11,7 @@ export class ReadCourseService {
   public async handle(id: string) {
 
     const courseRepository = new CourseRepository(this.db);
-    const result: CourseInterface = await courseRepository.read(id);
+    const result: any = await courseRepository.read(id);
 
     if (!result) {
       console.log("Result not found");
@@ -27,6 +27,8 @@ export class ReadCourseService {
       description: result.description,
       published: result.published,
       purpose: result.purpose,
+      content: result.content,
+      contents: result.contents,
       totalDuration: result.totalDuration,
     };
   }

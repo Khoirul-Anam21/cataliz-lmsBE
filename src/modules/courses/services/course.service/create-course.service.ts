@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+import { CourseInterface } from "../../entities/course.entity.js";
 import { CourseRepository } from "../../repositories/course.repository.js"
 import DatabaseConnection from "@src/database/connection.js";
 import { UserDisplayInterface } from "@src/modules/users/entities/user-display.entity.js";
@@ -18,10 +20,9 @@ export class CreateCourseService {
         
         await deleteFileAfterUpload(fileUpload);
 
-        const user: UserDisplayInterface = await userRepository.read(userId) 
+        const user: UserDisplayInterface = await userRepository.read(userId);
 
-
-        const result = await courseRepository.create({
+        const course: CourseInterface = {
             facilitator: {
                 _id: user._id,
                 username: user.username,
@@ -29,7 +30,7 @@ export class CreateCourseService {
                 job: user.job
             },
             title,
-            category_id,
+            category_id: new ObjectId('6438fa211c8b3a98161f6c75'), //tes
             thumbnail: uploadResult.url,
             purpose,
             description,
@@ -38,7 +39,10 @@ export class CreateCourseService {
             published: false,
             contents: [],
             certificate: null,
-        });
+        }
+
+
+        const result = await courseRepository.create(course);
 
         return {
             id: result._id,

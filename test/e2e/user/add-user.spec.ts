@@ -1,5 +1,6 @@
 import request from "supertest";
 import { createApp } from "@src/app.js";
+import UserFactory from "@src/modules/users/entities/user.factory";
 import { UserRepository } from "@src/modules/users/repositories/user.repository";
 
 describe("Add user/Sign-up", () => {

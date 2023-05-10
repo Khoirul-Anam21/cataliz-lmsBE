@@ -4,7 +4,6 @@ export interface CourseDisplayInterface {
   _id?: number | ObjectId;
   title?: string;
   facilitator: any;
-  contents: any[];
 }
 
 export enum MaterialType {
@@ -12,7 +11,7 @@ export enum MaterialType {
   Reading
 }
 export interface CourseContentInterface {
-  _id?: number | ObjectId;
+  _id?: ObjectId;
   course?: CourseDisplayInterface;
   thumbnail?: string;
   title?: string;

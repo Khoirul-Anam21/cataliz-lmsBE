@@ -5,6 +5,7 @@ import dotenv from "dotenv";
  * Setup environment
  */
 export const setupEnvironment = (env: string) => {
+  
   dotenv.config({
     path: getPath(env),
   });
@@ -17,8 +18,8 @@ export const setupEnvironment = (env: string) => {
  * .env.test(shared) and .env.test.local (not shared) are used in test mode.
  */
 const getPath = (env: string) => {
-  if (!fs.existsSync(`.env.${env}.local`)) {
-  }
+  console.log("envinya "+env);
+  
   return env === "test" ? ".env.test" : ".env";
 };
 

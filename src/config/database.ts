@@ -1,7 +1,12 @@
 import { config } from "dotenv";
+import { setupEnvironment } from "./environment.js";
 
-config();
 
+setupEnvironment(process.env.NODE_ENV as string); 
+console.log("INI ENV: " + process.env.NODE_ENV);
+console.log("INI DB: "+process.env.DATABASE_NAME as string);
+
+config()
 export interface IMongodbConfig {
   driver: "mongodb";
   protocol: string;
@@ -32,3 +37,5 @@ export const connection: IDatabaseConfig = {
     password: process.env.DATABASE_PASSWORD as string,
   },
 };
+
+

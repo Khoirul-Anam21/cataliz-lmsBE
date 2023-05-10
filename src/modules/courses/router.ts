@@ -28,8 +28,8 @@ courseRouter.get("/course-participant/:id", authController.authorizeFacil, contr
 courseContentRouter.get("/student/:id", authController.authorizeStudent, courseContentController.readCourseContentParticipant);
 courseContentRouter.get("/facil/:id", authController.authorizeFacil, courseContentController.readCourseContentFacilitator);
 courseContentRouter.post("/", authController.authorizeFacil, upload.single('material'), courseContentController.create);
-courseContentRouter.patch("/:id");
-courseContentRouter.delete("/:id");
+courseContentRouter.patch("/:id", authController.authorizeStudent, courseContentController.completeCourseContent);
+courseContentRouter.delete("/:id", authController.authorizeFacil, courseContentController.destroy);
 courseContentRouter.post("/assignments");
 courseContentRouter.get("/assignments");
 courseContentRouter.post("/assignment-submit/:id");

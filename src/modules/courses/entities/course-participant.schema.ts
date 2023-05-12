@@ -26,6 +26,10 @@ export async function createCollection(db: IDatabaseAdapter) {
           bsonType: "ObjectId",
           description: "must be a valid id",
         },
+        courseDetail: {
+          bsonType: "Object",
+          description: "Must be a course interface object",
+        }
       },
     });
     await db.createIndex(

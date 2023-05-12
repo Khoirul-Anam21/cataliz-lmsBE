@@ -28,15 +28,29 @@ export class ReadManyCourseParticipantService {
         '$match': {
           'participant._id': user_id
         }
-      }, {
+      }, 
+      {
+        '$addFields': {
+          'participation_id': '$course_in._id'
+        }
+      },
+      {
+        '$unwind': {
+          'path': '$participation_id',
+          'includeArrayIndex': 'string',
+          'preserveNullAndEmptyArrays': false,
+        }
+      },
+      {
         '$project': {
           '_id': 1, 
+          'participation_id': 1, 
           'facilitator': 1, 
           'thumbnail': 1, 
           'title': 1, 
           'category_id': 1
         }
-      }
+      }, 
     ]
 
     const iQuery: QueryInterface = {

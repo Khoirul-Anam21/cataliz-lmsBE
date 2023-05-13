@@ -8,12 +8,11 @@ import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity.
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // var st = fs.createReadStream(file);
+
+    // user credential by token
     const userCredential: UserAuthInterface = req.res?.locals.credential;
     const createCourseService = new CreateCourseService(db);
-    // const readUserService = new ReadUserService(db);
-    console.log(req.file);
-    // const uploadedFilePath: string = req.file?.path + req.file?.mimetype
+
     
     const result = await createCourseService.handle(
         userCredential._id,

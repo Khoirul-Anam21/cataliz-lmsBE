@@ -1,7 +1,8 @@
-import { ObjectId } from "mongodb";
 import { CourseInterface } from "../../entities/course.entity.js";
 import { CourseRepository } from "../../repositories/course.repository.js"
 import DatabaseConnection from "@src/database/connection.js";
+import { CategoryInterface } from "@src/modules/categories/entities/category.entity.js";
+import { CategoryRepository } from "@src/modules/categories/repositories/category.repository.js";
 import { UserDisplayInterface } from "@src/modules/users/entities/user-display.entity.js";
 import { UserRepository } from "@src/modules/users/repositories/user.repository.js";
 import uploader, { deleteFileAfterUpload } from "@src/services/cloudinary-storage/index.js";
@@ -14,6 +15,7 @@ export class CreateCourseService {
     public async handle(userId: any, title: string, category_id: string, thumbnailPath: Express.Multer.File | undefined, purpose: string[], description: string) {
         const courseRepository = new CourseRepository(this.db);
         const userRepository = new UserRepository(this.db);
+        const categoryRepository = new CategoryRepository(this.db);
 
         const fileUpload = thumbnailPath?.path ?? ""
         const uploadResult = await uploader.upload(fileUpload);
@@ -21,6 +23,7 @@ export class CreateCourseService {
         await deleteFileAfterUpload(fileUpload);
 
         const user: UserDisplayInterface = await userRepository.read(userId);
+        const category: CategoryInterface = await categoryRepository.read(category_id);
 
         const course: CourseInterface = {
             facilitator: {
@@ -30,7 +33,7 @@ export class CreateCourseService {
                 job: user.job
             },
             title,
-            category_id: new ObjectId('6438fa211c8b3a98161f6c75'), //tes
+            category: category.name, 
             thumbnail: uploadResult.url,
             purpose,
             description,
@@ -40,7 +43,6 @@ export class CreateCourseService {
             contents: [],
             certificate: null,
         }
-
 
         const result = await courseRepository.create(course);
 

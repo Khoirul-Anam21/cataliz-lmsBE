@@ -1,3 +1,4 @@
+import { ApiError } from "@point-hub/express-error-handler";
 import pkg from "jsonwebtoken";
 
 // eslint-disable-next-line import/no-named-as-default-member
@@ -42,7 +43,9 @@ export const generateRefreshToken = (issuer: string, secret: string, id: string)
 };
 
 export const verifyToken = (token: string, secret: string) => {
-  return verify(token, secret);
+  const result = verify(token, secret);
+  if (!result) throw new ApiError(401);
+  return result
 };
 
 export const isExpired = (exp: number) => {

@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 
 export interface UserAuthInterface {
-  _id?: string | ObjectId;
+  _id: string | ObjectId;
   username?: string;
   email?: string;
 }

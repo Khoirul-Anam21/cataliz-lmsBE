@@ -14,7 +14,6 @@ export class ReadUserService {
       _id: user._id,
       username: user.username,
       email: user.email,
-      password: user.password,
       role: user.role,
       job: user.job,
       photo: user.photo,

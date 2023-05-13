@@ -6,10 +6,12 @@ export class ReadManyCourseService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(limit: any = 20, page: any = 1, category?: any) {
+  public async handle(limit: any = 20, page: any = 1, categoryQuery?: any) {
+    const category: any= categoryQuery ?? undefined;
+    
     const iQuery: QueryInterface = {
       fields: "",
-      filter: { category, published: true }, // hanya yg terpublish yg tampil
+      filter: category === undefined ? { published: true } : { published: true, category }, // hanya yg terpublish yg tampil
       page: page,
       pageSize: limit,
       sort: "",

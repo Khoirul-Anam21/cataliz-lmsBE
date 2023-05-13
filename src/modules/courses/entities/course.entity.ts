@@ -7,7 +7,7 @@ export interface CourseInterface {
   facilitator?: UserDisplayInterface;
   thumbnail?: string;
   title?: string;
-  category_id?: number | ObjectId;
+  category?: string;
   purpose?: string[];
   published?: boolean;
   description?: string;

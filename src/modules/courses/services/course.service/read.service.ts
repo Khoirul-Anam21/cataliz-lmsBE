@@ -12,10 +12,9 @@ export class ReadCourseService {
 
     const courseRepository = new CourseRepository(this.db);
     const result: any = await courseRepository.read(id);
-
+    
     if (!result) {
-      console.log("Result not found");
-      throw new ApiError(404)
+      throw new ApiError(404, { msg: "Course not found"})
     }
 
     return {

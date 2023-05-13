@@ -23,12 +23,12 @@ courseRouter.get("/student/learnings", authController.authorizeStudent, cPartici
 courseRouter.post("/student/learnings", authController.authorizeStudent, cParticipantController.create); // done
 courseRouter.get("/facil/learnings", authController.authorizeFacil, cFacilitatorController.readMany); // done
 courseRouter.get("/course-participant/:id", authController.authorizeFacil, controller.readManyParticipant); // done
+courseRouter.patch("/course-participant/:id", authController.authorizeStudent, cParticipantController.completeCourseContent)
 
 // course content
 courseContentRouter.get("/student/:id", authController.authorizeStudent, courseContentController.readCourseContentParticipant);
 courseContentRouter.get("/facil/:id", authController.authorizeFacil, courseContentController.readCourseContentFacilitator);
 courseContentRouter.post("/", authController.authorizeFacil, upload.single('material'), courseContentController.create);
-courseContentRouter.patch("/:id", authController.authorizeStudent, courseContentController.completeCourseContent);
 courseContentRouter.delete("/:id", authController.authorizeFacil, courseContentController.destroy);
 courseContentRouter.post("/assignments");
 courseContentRouter.get("/assignments");

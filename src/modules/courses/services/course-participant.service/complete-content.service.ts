@@ -7,7 +7,7 @@ export class CompleteCourseContentService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(id: string, course_id: string) {
+  public async handle(id: string, courseContent_id: string) {
     // init repo course
     const courseParticipantRepository = new CourseParticipantRepository(this.db)
 
@@ -16,22 +16,27 @@ export class CompleteCourseContentService {
     try {
       await session.withTransaction(async () => {
         // content check
-        const courseData = await courseParticipantRepository.read(course_id, { session });
-        if (!courseData) throw new ApiError(404, { msg: "course not found " });
+        const courseParticipantData = await courseParticipantRepository.read(id, { session });
+        if (!courseParticipantData) throw new ApiError(404, { msg: "course not found " });
+        
 
-        const contents: any = courseData.contents;
+        const courseDetail: any = courseParticipantData.courseDetail;
+        
+        const courseContents: any = courseDetail.contents;
 
         // get index of desired contents of a course
-        const index = contents.findIndex((content: any) => content._id === id);
-        contents[index].isComplete = true;
+        const index = courseContents.findIndex((courseContent: any) => courseContent._id.toString() === courseContent_id);
+        
+        courseContents[index].isComplete = true;
 
-        await courseParticipantRepository.update(course_id, { contents }, { session });
+        await courseParticipantRepository.update(id, { "courseDetail.contents": courseContents }, { session });
       })
       await session.commitTransaction();
       await session.endSession();
     } catch (error) {
-      throw new ApiError(400)
+      console.log(error);
       await session.abortTransaction();
+      throw new ApiError(400)
     }
 
     return {};

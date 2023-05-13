@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 import Factory from "@point-hub/express-factory";
 import { UserRepository } from "../repositories/user.repository.js";
 import { UserInterface } from "./user.entity";
+import { CreateResultInterface } from "@src/database/connection.js";
 import { db } from "@src/database/database.js";
 
 export default class UserFactory extends Factory<UserInterface>{
@@ -16,7 +17,7 @@ export default class UserFactory extends Factory<UserInterface>{
         }
     }
     
-    async create(): Promise<unknown> {
+    async create(): Promise<CreateResultInterface> {
         const userRepository = new UserRepository(db);
         const result = await userRepository.create(this.makeOne());
         return result;

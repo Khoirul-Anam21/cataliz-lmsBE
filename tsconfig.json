@@ -1,6 +1,6 @@
 {
   "include": [
-    "**/*.ts",
+    "**/*.ts", "src/modules/assignments/controllers/submit.controller.ts",
   ],
   "exclude": [
     "coverage",

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from 'multer';
-import * as authController from "../auth/controllers/index.js"
+import * as authController from "../auth/controllers/index.js";
 import * as courseContentController from "./controllers/course-content.controller/index.js"; 
 import * as cFacilitatorController from "./controllers/course-facilitator.controller/index.js";
 import * as cParticipantController from "./controllers/course-participant.controller/index.js";
@@ -30,10 +30,6 @@ courseContentRouter.get("/student/:id", authController.authorizeStudent, courseC
 courseContentRouter.get("/facil/:id", authController.authorizeFacil, courseContentController.readCourseContentFacilitator);
 courseContentRouter.post("/", authController.authorizeFacil, upload.single('material'), courseContentController.create);
 courseContentRouter.delete("/:id", authController.authorizeFacil, courseContentController.destroy);
-courseContentRouter.post("/assignments");
-courseContentRouter.get("/assignments");
-courseContentRouter.post("/assignment-submit/:id");
-courseContentRouter.patch("/assignment-grade/:id");
 
 
 

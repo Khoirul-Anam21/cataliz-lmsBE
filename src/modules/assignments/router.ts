@@ -1,12 +1,13 @@
 import { Router } from "express";
+import * as authController from "../auth/controllers/index.js";
 import * as controller from "./controllers/index.js";
 
-const router = Router();
 
-router.get("/", controller.readMany);
-router.get("/:id", controller.read);
-router.post("/", controller.invite);
-router.patch("/:id", controller.update);
-router.delete("/:id", controller.destroy);
+const assignmentRouter = Router();
 
-export default router;
+assignmentRouter.get("/", authController.authorizeFacil, controller.readMany);
+assignmentRouter.post("/", authController.authorizeFacil, controller.create);
+assignmentRouter.post("/submit/:id", authController.authorizeStudent, controller.submitAssignment);
+assignmentRouter.patch("/grade/:id", authController.authorizeFacil, controller.gradeAssignment);
+
+export default assignmentRouter;

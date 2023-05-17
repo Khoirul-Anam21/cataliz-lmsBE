@@ -5,11 +5,6 @@ export interface CourseDisplayInterface {
   title?: string;
   facilitator: any;
 }
-
-export enum MaterialType {
-  Video,
-  Reading
-}
 export interface CourseContentInterface {
   _id?: ObjectId;
   course?: CourseDisplayInterface;
@@ -19,7 +14,6 @@ export interface CourseContentInterface {
   type: string;
   duration: number;
   description: string;
-  assignment: any;
   isComplete: boolean   
 }
 

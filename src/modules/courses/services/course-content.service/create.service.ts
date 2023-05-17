@@ -71,7 +71,6 @@ export class CreateCourseContentService {
                 duration,
                 type,
                 description,
-                assignment: null,
                 isComplete: false
             }
             

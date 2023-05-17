@@ -14,9 +14,9 @@ import DatabaseConnection, {
   DeleteResultInterface,
 } from "@src/database/connection.js";
 
-export class UserRepository extends BaseRepository {
+export class AssignmentRepository extends BaseRepository {
   constructor(db: DatabaseConnection) {
-    super(db, "users");
+    super(db, "assignments");
   }
 
   public async create(doc: DocumentInterface, options?: CreateOptionsInterface): Promise<CreateResultInterface> {

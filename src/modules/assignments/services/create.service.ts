@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { AssignmentRepository } from "../repositories/assignment.repository";
+import { AssignmentRepository } from "../repositories/assignment.repository.js";
 import DatabaseConnection from "@src/database/connection.js";
 
 export class CreateAssignmentService {

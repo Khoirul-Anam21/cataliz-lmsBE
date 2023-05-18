@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { GradeAssignmentService } from "../services/grade.service";
+import { GradeAssignmentService } from "../services/grade.service.js";
 import { db } from "@src/database/database.js";
 
 export const gradeAssignment = async (req: Request, res: Response, next: NextFunction) => {
@@ -9,8 +9,8 @@ export const gradeAssignment = async (req: Request, res: Response, next: NextFun
 
     // handle
     await gradeAssignmentService.handle(
-      req.params.submission_id,
-      req.body.grade
+      req.params.submissionId,
+      req.body.score
     )
     
     res.status(204).json({});

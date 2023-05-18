@@ -1,7 +1,7 @@
 // import fs from 'fs';
 import { NextFunction, Request, Response } from "express";
 // import { validate } from "../request/signin.request.js";
-import { CreateAssignmentService } from "../services/create.service ";
+import { CreateAssignmentService } from "../services/create.service.js";
 import { db } from "@src/database/database.js";
 // import { ReadUserService } from "@src/modules/users/services/read.service.js";
 

@@ -1,9 +1,10 @@
 import { ApiError } from "@point-hub/express-error-handler";
-import { AssignmentInterface } from "../entities/assignment.entity";
-import { AssignmentSubmissionRepository } from "../repositories/assignment-submission.repository";
-import { AssignmentRepository } from "../repositories/assignment.repository";
+import { ObjectId } from "mongodb";
+import { AssignmentInterface } from "../entities/assignment.entity.js";
+import { AssignmentSubmissionRepository } from "../repositories/assignment-submission.repository.js";
+import { AssignmentRepository } from "../repositories/assignment.repository.js";
 import DatabaseConnection from "@src/database/connection.js";
-import uploader, { deleteFileAfterUpload } from "@src/services/cloudinary-storage";
+import uploader, { deleteFileAfterUpload } from "@src/services/cloudinary-storage/index.js";
 
 export class SubmitAssignmentService {
   private db: DatabaseConnection;
@@ -18,6 +19,8 @@ export class SubmitAssignmentService {
     const assignmentUpload = assignment?.path ?? "";
     if (!assignmentUpload) throw new ApiError(400, {msg: "error when sending file"});
 
+    console.log(assignmentUpload);    
+
     // read assignment id
     const assignmentData: AssignmentInterface = await assignmentRepository.read(id);
     if (!assignmentData) throw new ApiError(404)
@@ -27,8 +30,8 @@ export class SubmitAssignmentService {
 
     // add new participant with submission
     const result = await assignmentSubmissionRepository.create({
-      user_id,
-      assignment_id: id,
+      user_id: new ObjectId(user_id),
+      assignment_id: new ObjectId(id),
       submission: fileUpload.url,
       isGraded: false,
       score: 0,

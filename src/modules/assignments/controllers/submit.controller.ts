@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { SubmitAssignmentService } from "../services/submit.service";
+import { SubmitAssignmentService } from "../services/submit.service.js";
 import { db } from "@src/database/database.js";
-import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity";
+import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity.js";
 
 
 export const submitAssignment = async (req: Request, res: Response, next: NextFunction) => {

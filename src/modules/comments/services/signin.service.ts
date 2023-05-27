@@ -1,4 +1,4 @@
-import { UserRepository } from "../repositories/user.repository.js";
+import { UserRepository } from "../repositories/comment.repository.js";
 import { issuer, secretKey } from "@src/config/auth.js";
 import DatabaseConnection, { QueryInterface } from "@src/database/connection.js";
 import { verify } from "@src/utils/hash.js";

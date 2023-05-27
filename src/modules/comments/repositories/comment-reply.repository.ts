@@ -16,7 +16,7 @@ import DatabaseConnection, {
 
 export class UserRepository extends BaseRepository {
   constructor(db: DatabaseConnection) {
-    super(db, "users");
+    super(db, "commentReplies");
   }
 
   public async create(doc: DocumentInterface, options?: CreateOptionsInterface): Promise<CreateResultInterface> {

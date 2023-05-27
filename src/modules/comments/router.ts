@@ -1,12 +1,15 @@
 import { Router } from "express";
-import * as controller from "./controllers/index.js";
+import * as controller from "./controllers/comment.controller/index.js";
 
-const router = Router();
+const commentRouter = Router();
 
-router.get("/", controller.readMany);
-router.get("/:id", controller.read);
-router.post("/", controller.invite);
-router.patch("/:id", controller.update);
-router.delete("/:id", controller.destroy);
 
-export default router;
+commentRouter.get('/');
+commentRouter.post('/');
+commentRouter.put('/:id');
+commentRouter.put('/replies/:id');
+commentRouter.delete('/:id');
+commentRouter.delete('/replies/:id');
+
+
+export default commentRouter;

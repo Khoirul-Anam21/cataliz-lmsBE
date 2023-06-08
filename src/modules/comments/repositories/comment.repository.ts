@@ -14,7 +14,7 @@ import DatabaseConnection, {
   DeleteResultInterface,
 } from "@src/database/connection.js";
 
-export class UserRepository extends BaseRepository {
+export class CommentRepository extends BaseRepository {
   constructor(db: DatabaseConnection) {
     super(db, "comments");
   }

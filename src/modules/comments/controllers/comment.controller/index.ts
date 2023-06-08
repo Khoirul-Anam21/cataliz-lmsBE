@@ -1,4 +1,4 @@
-export { readMany } from "./read-many.controller";
-export { create } from "./create.controller";
-export { update } from "./update.controller";
-export { destroy } from "./destroy.controller";
+export { readMany } from "./read-many.controller.js";
+export { create } from "./create.controller.js";
+export { update } from "./update.controller.js";
+export { destroy } from "./destroy.controller.js";

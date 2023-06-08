@@ -1,17 +1,17 @@
 import { ObjectId } from "mongodb";
 
-export interface Comment {
+export interface CommentInterface {
     _id: number | ObjectId;
-    userId: number | ObjectId; //fk
-    courseId: number | ObjectId; //fk
-    content: string;
-    contentId: number | ObjectId; //fk
+    user_id?: number | ObjectId; //fk
+    course_id?: number | ObjectId; //fk
+    comment?: string;
+    content_id?: number | ObjectId; //fk
   }
 
 export class CommentEntity {
-  public comment: Comment;
+  public comment: CommentInterface;
 
-  constructor(comment: Comment) {
+  constructor(comment: CommentInterface) {
     this.comment = comment;
   }
 }

@@ -1,16 +1,16 @@
 import { ObjectId } from "mongodb";
 
-export interface CommentReply {
+export interface CommentReplyInterface {
     _id: number | ObjectId;
-    commentId: number | ObjectId;
-    userId: number | ObjectId;
-    content: string
+    comment_id?: number | ObjectId;
+    user_id?: number | ObjectId;
+    comment?: string
   }
 
 export class CommentReplyEntity {
-  public commentReply: CommentReply;
+  public commentReply: CommentReplyInterface;
 
-  constructor(commentReply: CommentReply) {
+  constructor(commentReply: CommentReplyInterface) {
     this.commentReply = commentReply;
   }
 }

@@ -1,6 +1,6 @@
 // import fs from 'fs';
 import { NextFunction, Request, Response } from "express";
-import { validateCreateCourse } from "../../request/create.request.js";
+import { validateCreateCourse } from "../../request/create-course.request.js";
 import { CreateCourseService } from "../../services/course.service/create-course.service.js";
 import { db } from "@src/database/database.js";
 import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity.js";

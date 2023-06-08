@@ -1,14 +1,13 @@
 // import fs from 'fs';
 import { NextFunction, Request, Response } from "express";
+import { validateCreateCourse } from "../../request/create.request.js";
 import { CreateCourseService } from "../../services/course.service/create-course.service.js";
-// import { validate } from "../request/signin.request.js";
 import { db } from "@src/database/database.js";
 import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity.js";
-// import { ReadUserService } from "@src/modules/users/services/read.service.js";
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
   try {
-
+    validateCreateCourse(req.body);
     // user credential by token
     const userCredential: UserAuthInterface = req.res?.locals.credential;
     const createCourseService = new CreateCourseService(db);

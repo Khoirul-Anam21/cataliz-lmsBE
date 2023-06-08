@@ -1,9 +1,9 @@
 import { ApiError } from "@point-hub/express-error-handler";
 import Validatorjs from "validatorjs";
 
-export const validate = (body: any) => {
+export const validateCompleteCourseContent = (body: any) => {
   const validation = new Validatorjs(body, {
-    email: "required|email",
+    courseContent_id: "required",
   });
 
   if (validation.fails()) {

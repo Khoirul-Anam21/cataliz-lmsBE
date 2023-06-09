@@ -10,10 +10,6 @@ export class DestroyCourseContentService {
   public async handle(id: string) {
     // init repo
     const courseContentRepository = new CourseContentRepository(this.db);
-    console.log("MASUK SINI A"); 
-    
-    // check availability
-    // TODO: This is not a course woi
 
     const session: any = this.db.startSession();
 
@@ -28,7 +24,9 @@ export class DestroyCourseContentService {
         await courseContentRepository.delete(id);
       });
     } catch (error) {
-      
+      await session.abortTransaction();
+      console.log(error);
+      throw new ApiError(400, { msg: "Failed to delete course content " });
     }
 
     return {};  

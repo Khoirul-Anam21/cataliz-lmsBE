@@ -1,4 +1,5 @@
 
+import { ApiError } from "@point-hub/express-error-handler";
 import DatabaseConnection, { QueryInterface } from "@src/database/connection.js";
 import { UserRepository } from "@src/modules/users/repositories/user.repository.js";
 
@@ -10,6 +11,9 @@ export class ReadManyCourseFacilService {
   public async handle(user_id: any, page = 1, limit = 10) {
     // import repo awal
     const userRepository = new UserRepository(this.db);
+
+    const user = await userRepository.read(user_id);
+    if(!user) throw new ApiError(404, { msg: 'user not found'} );
     // pipeline
     const pipeline = [
       {

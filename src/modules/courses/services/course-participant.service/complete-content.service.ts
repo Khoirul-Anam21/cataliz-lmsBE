@@ -9,7 +9,10 @@ export class CompleteCourseContentService {
   }
   public async handle(id: string, courseContent_id: string) {
     // init repo course
-    const courseParticipantRepository = new CourseParticipantRepository(this.db)
+    const courseParticipantRepository = new CourseParticipantRepository(this.db);
+
+    const courseParticipant = await courseParticipantRepository.read(id);
+    if(!courseParticipant) throw new ApiError(404, { msg: 'participant not found' });
 
     // transaction wrapper
     const session: any = this.db.startSession();

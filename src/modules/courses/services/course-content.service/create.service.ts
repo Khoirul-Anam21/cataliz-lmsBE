@@ -17,7 +17,7 @@ export class CreateCourseContentService {
 
         // Upload file
         const fileUpload = material?.path;
-        if (!fileUpload) throw new ApiError(400)
+        if (!fileUpload) throw new ApiError(400, { msg: 'file upload not found or invalid'} );
 
         // check if a video or not
         const uploadResult = getType(material.mimetype) == "video" ? 
@@ -56,7 +56,6 @@ export class CreateCourseContentService {
             });
 
             const _id = new ObjectId();
-            console.log("pass");  
              
             const courseContent: CourseContentInterface = {
                 _id,
@@ -74,16 +73,8 @@ export class CreateCourseContentService {
                 isComplete: false
             }
             
-
-
             const contents: any = course.contents;
             const content: any = course.content;
-
-            console.log(contents);
-            
-
-            console.log("Third phase");
-            
 
             await courseRepository.update(course_id, {
                 content: content + 1,

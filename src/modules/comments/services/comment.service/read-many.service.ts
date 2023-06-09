@@ -1,7 +1,9 @@
+import { ApiError } from "@point-hub/express-error-handler";
 import { ObjectId } from "mongodb";
 import { CommentReplyRepository } from "../../repositories/comment-reply.repository.js";
 import { CommentRepository } from "../../repositories/comment.repository.js";
 import DatabaseConnection, { QueryInterface } from "@src/database/connection.js";
+import { CourseRepository } from "@src/modules/courses/repositories/course.repository.js";
 
 export class ReadManyCommentsService {
   private db: DatabaseConnection;
@@ -11,7 +13,11 @@ export class ReadManyCommentsService {
   public async handle(course_id: string) {
     // repo
     const commentRepository = new CommentRepository(this.db);
-    const commentReplyRepository = new CommentReplyRepository(this.db)
+    const commentReplyRepository = new CommentReplyRepository(this.db);
+    const courseRepository = new CourseRepository(this.db);
+
+    const course = await courseRepository.read(course_id);
+    if (!course) throw new ApiError(404, { msg: 'course not found' });
 
     // pipeline
     const commentPipeline = [

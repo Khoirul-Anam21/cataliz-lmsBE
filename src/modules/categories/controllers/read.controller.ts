@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { CategoryInterface } from "../entities/category.entity";
+import { CategoryInterface } from "../entities/category.entity.js";
 import { ReadCategoryService } from "../services/read.service.js";
 import { db } from "@src/database/database.js";
-import { validateIdParams } from "@src/utils/params.validator";
+import { validateIdParams } from "@src/utils/params.validator.js";
 
 export const read = async (req: Request, res: Response, next: NextFunction) => {
   try {

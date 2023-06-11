@@ -6,12 +6,16 @@ export class ReadManyCourseService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(limit: any = 20, page: any = 1, categoryQuery?: any) {
-    const category: any= categoryQuery ?? undefined;
-    
+  public async handle(limit: any = 20, page: any = 1, categoryQuery?: any, searchQuery?: any) {
+    const filter = !searchQuery ?
+      { published: true } :
+      !categoryQuery ?
+        { published: true, title: { $regex: new RegExp(searchQuery, 'i') } } : // searching with regex
+        { published: true, category: categoryQuery, title: { $regex: new RegExp(searchQuery, 'i') } };
+
     const iQuery: QueryInterface = {
       fields: "",
-      filter: category === undefined ? { published: true } : { published: true, category }, // hanya yg terpublish yg tampil
+      filter,
       page: page,
       pageSize: limit,
       sort: "",

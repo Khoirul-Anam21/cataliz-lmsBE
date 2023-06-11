@@ -3,7 +3,7 @@ import { CourseInterface } from "../../entities/course.entity";
 import { ReadCourseService } from "../../services/course.service/read.service.js";
 import { db } from "@src/database/database.js";
 import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity";
-import { validateIdParams } from "@src/utils/params.validator";
+import { validateIdParams } from "@src/utils/params.validator.js";
 
 export const read = async (req: Request, res: Response, next: NextFunction) => {
   try {

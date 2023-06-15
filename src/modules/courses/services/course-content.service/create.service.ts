@@ -24,7 +24,8 @@ export class CreateCourseContentService {
             await uploader.upload(fileUpload, { folder: "content-materials", resource_type: "video" }) : 
             await uploader.upload(fileUpload, { folder: "content-materials" });
 
-
+        console.log(uploadResult);
+        
         // get url
         const fileUrl: string = uploadResult.url;
 

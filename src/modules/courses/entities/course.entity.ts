@@ -12,8 +12,8 @@ export interface CourseInterface {
   published?: boolean;
   description?: string;
   totalDuration?: number;
-  content: number;
-  contents: CourseContentInterface[]
+  content?: number;
+  contents?: CourseContentInterface[]
   certificate?: null
 }
 

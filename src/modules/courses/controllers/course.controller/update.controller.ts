@@ -13,7 +13,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
       req.params.id, // id course
       req.body.title,
       req.body.category_id,
-      req.body.thumbnail,
+      req.file,
       req.body.purpose,
       req.body.description
     )

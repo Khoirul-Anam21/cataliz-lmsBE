@@ -19,6 +19,7 @@ export class CreateCourseService {
 
         const fileUpload = thumbnailPath?.path ?? ""
         const uploadResult = await uploader.upload(fileUpload);
+        console.log(uploadResult);
         
         await deleteFileAfterUpload(fileUpload);
 

@@ -12,7 +12,7 @@ export const destroy = async (req: Request, res: Response, next: NextFunction) =
     // delete with params
     console.log(req.params.id);
     
-    await destroyCourseContentRepository.handle(req.params.id);
+    await destroyCourseContentRepository.handle(req.params.id, req.body.course_id);
     res.status(204).json({});
   } catch (error) {
     next(error);

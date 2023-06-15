@@ -5,6 +5,7 @@ import authRouter from "./modules/auth/router.js";
 import categoryRouter from "./modules/categories/router.js";
 import commentRouter from "./modules/comments/router.js";
 import { courseContentRouter, courseRouter } from "./modules/courses/router.js";
+import reportRouter from "./modules/reports/router.js";
 import usersRouter from "./modules/users/router.js";
 
 export default async function () {
@@ -21,6 +22,7 @@ export default async function () {
   app.use(`/categories`, categoryRouter);
   app.use('/announcements', announcementRouter);
   app.use('/comments', commentRouter);
+  app.use('/reports', reportRouter)
 
   return app;
 }

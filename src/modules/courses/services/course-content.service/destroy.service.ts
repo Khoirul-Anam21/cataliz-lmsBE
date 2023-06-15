@@ -7,7 +7,7 @@ export class DestroyCourseContentService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(id: string) {
+  public async handle(id: string, course_id: string) {
     // init repo
     const courseContentRepository = new CourseContentRepository(this.db);
 

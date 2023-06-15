@@ -16,7 +16,7 @@ const courseContentRouter = Router();
 courseRouter.get("/", controller.readMany); // done tinggal category
 courseRouter.get("/:id", authController.authorizeStudent, controller.read);   // tambah jika auth maka tampil sebagian
 courseRouter.post("/", authController.authorizeFacil, upload.single('thumbnail'), controller.create);   // done
-courseRouter.put("/:id", authController.authorizeFacil, controller.update);  // done
+courseRouter.put("/:id", authController.authorizeFacil, upload.single('thumbnail'), controller.update);  // done
 courseRouter.delete("/:id", authController.authorizeFacil, controller.destroy);  // done
 courseRouter.put("/course-publish/:id", controller.publishCourse);    // done
 courseRouter.get("/student/learnings", authController.authorizeStudent, cParticipantController.readMany);  // done
@@ -29,6 +29,7 @@ courseRouter.patch("/course-participant/:id", authController.authorizeStudent, c
 courseContentRouter.get("/student/:id", authController.authorizeStudent, courseContentController.readCourseContentParticipant);
 courseContentRouter.get("/facil/:id", authController.authorizeFacil, courseContentController.readCourseContentFacilitator);
 courseContentRouter.post("/", authController.authorizeFacil, upload.single('material'), courseContentController.create);
+courseContentRouter.put("/:id", authController.authorizeFacil, upload.single('material'), courseContentController.update);
 courseContentRouter.delete("/:id", authController.authorizeFacil, courseContentController.destroy);
 
 

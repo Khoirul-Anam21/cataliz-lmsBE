@@ -10,11 +10,12 @@ export interface CourseContentInterface {
   course?: CourseDisplayInterface;
   thumbnail?: string;
   title?: string;
-  material: string;
-  type: string;
-  duration: number;
-  description: string;
-  isComplete: boolean   
+  reading?: string;
+  material?: string;
+  type?: string;
+  duration?: number;
+  description?: string;
+  isComplete?: boolean   
 }
 
 export class CourseContentEntity {

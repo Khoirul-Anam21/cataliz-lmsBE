@@ -1,8 +1,9 @@
 import { ApiError } from "@point-hub/express-error-handler";
+import { CourseContentInterface } from "../../entities/course-content.entity.js";
 import { CourseInterface } from "../../entities/course.entity.js";
 import { CourseRepository } from "../../repositories/course.repository.js";
 import DatabaseConnection from "@src/database/connection.js";
-import uploader, { deleteFileAfterUpload } from "@src/services/cloudinary-storage/index.js";
+import uploader, { deleteFileAfterUpload, resourceApi } from "@src/services/cloudinary-storage/index.js";
 import { getType } from "@src/utils/material-type.js";
 import { getCloudinaryPublicId } from "@src/utils/url_public-id.js";
 
@@ -11,7 +12,7 @@ export class UpdateCourseContentService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(id: string, course_id: string, title?: string, description?: string, material?: Express.Multer.File) {
+  public async handle(id: string, course_id: string, title?: string, description?: string, reading?: string, material?: Express.Multer.File) {
     const courseRepository = new CourseRepository(this.db);
 
     const course: CourseInterface = await courseRepository.read(course_id);
@@ -20,50 +21,24 @@ export class UpdateCourseContentService {
     // filter content
     const contents = course.contents ?? [];
     console.log(contents);
-
     const contentIndex = contents?.findIndex(contentEl => contentEl._id?.toString() === id) ?? -1;
-    console.log(contentIndex);
 
     if (contentIndex === -1 || !contents) throw new ApiError(404, { msg: "content not found" });
 
-    if (material) {
-      // get public id 
-      const materialContent = contents[contentIndex].material
-      const cldPublicId = getCloudinaryPublicId(materialContent);
+    const isMaterial = material !== undefined;
+    
+    let videoMaterial;
+    if (isMaterial) videoMaterial = await uploadAndReplaceVideo(contents, contentIndex, material);
 
-      // delete old picture
-      await uploader.destroy("content-materials/" + cldPublicId,
-        getType(material.mimetype) === "video" ? { resource_type: 'video' } : { resource_type: 'raw' });
-      // if (destroyImgResult.result !== 'ok') throw new ApiError(400, { msg: "failed to delete image" });
-      // console.log(destroyImgResult)
-      const fileUpload = material?.path;
-      if (!fileUpload) throw new ApiError(400, { msg: 'file upload not found or invalid' });
-
-      const uploadResult = getType(material?.mimetype) == "video" ?
-        await uploader.upload(fileUpload, { folder: "content-materials", resource_type: "video" }) :
-        await uploader.upload(fileUpload, { folder: "content-materials" });
-
-      deleteFileAfterUpload(fileUpload);
-
-      contents[contentIndex] = {
-        ...contents[contentIndex],
-        title,
-        description: description ?? "",
-        material: uploadResult.url
-      }
-
-      await courseRepository.update(course_id, {
-        contents
-      })
-    }
-
-    // replace old value
-    contents?.splice(contentIndex, 1, {
+    contents[contentIndex] = {
       ...contents[contentIndex],
-      title: title ?? "",
+      title,
       description: description ?? "",
-    })
-    console.log(contents);
+      reading: isMaterial ? "" : reading,
+      duration: isMaterial ? videoMaterial?.duration : 0,
+      material: isMaterial ? videoMaterial?.url : "",
+      type: isMaterial ? "video" : "reading",
+    }
 
     await courseRepository.update(course_id, {
       contents
@@ -71,4 +46,34 @@ export class UpdateCourseContentService {
 
     return {};
   }
+}
+
+const uploadAndReplaceVideo = async (contents: CourseContentInterface[], contentIndex: number, material: Express.Multer.File) => {
+  // get public id 
+  const materialContent = contents[contentIndex].material ?? ""
+  const cldPublicId = getCloudinaryPublicId(materialContent);
+
+  // delete old picture
+  await uploader.destroy("content-materials/" + cldPublicId,
+    getType(material.mimetype) === "video" ? { resource_type: 'video' } : { resource_type: 'raw' });
+  // if (destroyImgResult.result !== 'ok') throw new ApiError(400, { msg: "failed to delete image" });
+  // console.log(destroyImgResult)
+  const fileUpload = material?.path;
+  if (!fileUpload) throw new ApiError(400, { msg: 'file upload not found or invalid' });
+
+  const uploadResult = getType(material?.mimetype) == "video" ?
+    await uploader.upload(fileUpload, {
+      resource_type: 'video',
+      quality: '70',
+      video_codec: 'h264',
+      bitrate: '500k'
+    }) :
+    await uploader.upload(fileUpload, { folder: "content-materials" });
+
+  deleteFileAfterUpload(fileUpload);
+
+  const videoResource = await resourceApi.resource(uploadResult.public_id, { resource_type: "video", image_metadata: true });
+
+  return { url: uploadResult.url, duration: Number(videoResource.duration) };
+
 }

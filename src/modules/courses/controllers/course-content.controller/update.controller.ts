@@ -14,6 +14,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
       req.body.course_id,
       req.body.title,
       req.body.description,
+      req.body.reading,
       req.file
     )
     res.status(204).json({});

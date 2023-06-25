@@ -9,7 +9,6 @@ export class DestroyCourseService {
   }
   public async handle(id: string) {
     const courseRepository = new CourseRepository(this.db);
-
     const course = await courseRepository.read(id);
     if (!course) throw new ApiError(404)
     

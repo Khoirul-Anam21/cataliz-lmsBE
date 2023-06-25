@@ -16,5 +16,5 @@ export const destroy = async (req: Request, res: Response, next: NextFunction) =
     res.status(204).json({});
   } catch (error) {
     next(error);
-  }
+  } 
 };

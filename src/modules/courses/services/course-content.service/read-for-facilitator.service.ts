@@ -52,4 +52,4 @@ export class ReadCourseContentFacilitatorService {
     // return data inside of array filter after agregate
     return result.data[0].contents[0]; 
   }
-}
+} 

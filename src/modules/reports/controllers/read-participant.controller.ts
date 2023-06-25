@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ReadParticipantReportService } from "../services/read-participant.service";
+import { ReadParticipantReportService } from "../services/read-participant.service.js";
 import { db } from "@src/database/database.js";
 import { validateIdParams } from "@src/utils/params.validator.js";
 

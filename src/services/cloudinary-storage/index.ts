@@ -16,5 +16,6 @@ export const deleteFileAfterUpload = async (fileName: string) => {
     });
 }
 
+export const resourceApi = cloudinary.api;
 
 export default uploader;

@@ -48,13 +48,13 @@ export class ReadManyCourseParticipantService {
         }
       },
       {
-        '$project': {
+        '$project': { 
           '_id': 1,
-          'participation_id': 1,
+          'participation_id': 1, 
           'facilitator': 1,
           'thumbnail': 1,
           'title': 1,
-          'category_id': 1
+          'category': 1
         }
       },
     ]

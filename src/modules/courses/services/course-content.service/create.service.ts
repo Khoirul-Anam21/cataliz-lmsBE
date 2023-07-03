@@ -53,7 +53,7 @@ export class CreateCourseContentService {
                 duration: isMaterial ? videoMaterial?.duration : 0,
                 type: isMaterial ? videoMaterial?.type : "reading",
                 description,
-                isComplete: false
+                // isComplete: false
             }
 
             const contents: any = course.contents;

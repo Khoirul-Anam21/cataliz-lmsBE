@@ -14,14 +14,16 @@ export class CreateCourseParticipantService {
         const courseParticipantRepository = new CourseParticipantRepository(this.db);
         const courseRepository = new CourseRepository(this.db)
         const userRepository = new UserRepository(this.db);
-        const courseData = await courseRepository.read(courseId);
 
         const userStudent = await userRepository.read(studentId);
         const course = await courseRepository.read(courseId);
+        console.log(course);
+        const contents: any = course.contents;
+        const progressContents = contents.map( (content: any) => ({ content_id: content._id, isComplete: false }))
 
         if (!userStudent || !course) throw new ApiError(404, { msg: 'data not found' });
 
-        await courseParticipantRepository.create({ user_id: new ObjectId(studentId), course_id: new ObjectId(courseId), courseDetail: courseData })
-        return {};
+        await courseParticipantRepository.create({ user_id: new ObjectId(studentId), course_id: new ObjectId(courseId), contentDetail: progressContents })
+        return {}; 
     }
 }

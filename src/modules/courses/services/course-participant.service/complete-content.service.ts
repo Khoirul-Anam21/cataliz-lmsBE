@@ -23,16 +23,16 @@ export class CompleteCourseContentService {
         if (!courseParticipantData) throw new ApiError(404, { msg: "course not found " });
         
 
-        const courseDetail: any = courseParticipantData.courseDetail;
+        const contentDetail: any = courseParticipantData.contentDetail;
         
-        const courseContents: any = courseDetail.contents;
+        // const courseContents: any = courseDetail.contents;
 
         // get index of desired contents of a course
-        const index = courseContents.findIndex((courseContent: any) => courseContent._id.toString() === courseContent_id);
+        const index = contentDetail.findIndex((courseContent: any) => courseContent.content_id.toString() === courseContent_id);
         
-        courseContents[index].isComplete = true;
+        contentDetail[index].isComplete = true;
 
-        await courseParticipantRepository.update(id, { "courseDetail.contents": courseContents }, { session });
+        await courseParticipantRepository.update(id, { contentDetail }, { session });
       })
       await session.commitTransaction();
       await session.endSession();

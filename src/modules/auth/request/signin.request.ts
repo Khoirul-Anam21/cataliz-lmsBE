@@ -1,10 +1,9 @@
 import { ApiError } from "@point-hub/express-error-handler";
 import Validatorjs from "validatorjs";
 
-export const validate = (body: any) => {
+export const validateSignIn = (body: any) => {
   const validation = new Validatorjs(body, {
-    username: "required",
-    email: "required",
+    email: "required|email",
     password: "required|min:8",
   });
 

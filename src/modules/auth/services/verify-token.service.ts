@@ -11,25 +11,29 @@ export class VerifyTokenUserService {
     this.db = db;
   }
   public async handle(token: string) {
-    const result: any = verifyToken(token.split(" ")[1], secretKey);
-
-    // token invalid
-    if (!result) {
+    try {
+      const result: any = verifyToken(token.split(" ")[1], secretKey);
+    
+      // token invalid
+      if (!result) {
+        throw new ApiError(401);
+      }
+  
+      // token expired
+      if (new Date() > result.exp) {
+        throw new ApiError(401);
+      }
+  
+      const readUserService = new ReadUserService(this.db);
+      const user: UserAuthInterface = (await readUserService.handle(result.sub)) as UserAuthInterface;
+  
+      return {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+      };
+    } catch (error) {
       throw new ApiError(401);
     }
-
-    // token expired
-    if (new Date() > result.exp) {
-      throw new ApiError(401);
-    }
-
-    const readUserService = new ReadUserService(this.db);
-    const user: UserAuthInterface = (await readUserService.handle(result.sub)) as UserAuthInterface;
-
-    return {
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-    };
   }
 }

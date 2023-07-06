@@ -1,21 +1,27 @@
 import { ObjectId } from "mongodb";
 
-export interface CourseInterface {
+export interface CourseDisplayInterface {
   _id?: number | ObjectId;
-  user_id?: number | ObjectId;
+  title?: string;
+  facilitator: any;
+}
+export interface CourseContentInterface {
+  _id?: ObjectId;
+  course?: CourseDisplayInterface;
   thumbnail?: string;
   title?: string;
-  category_id?: number | ObjectId;
-  purpose: string;
-  published: boolean;
-  description: string;
-  totalDuration: number;
+  reading?: string;
+  material?: string;
+  type?: string;
+  duration?: number;
+  description?: string;
+  isComplete?: boolean   
 }
 
-export class CourseEntity {
-  public course: CourseInterface;
+export class CourseContentEntity {
+  public course: CourseContentInterface;
 
-  constructor(course: CourseInterface) {
+  constructor(course: CourseContentInterface) {
     this.course = course;
   }
 }

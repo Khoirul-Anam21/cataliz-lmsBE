@@ -17,6 +17,11 @@ import DatabaseConnection, {
 export class CourseRepository extends BaseRepository {
   constructor(db: DatabaseConnection) {
     super(db, "courses");
+    this.createIndex();
+  }
+
+  private createIndex() { 
+    this.collection().createIndex('courses', { title: 1 })
   }
 
   public async create(doc: DocumentInterface, options?: CreateOptionsInterface): Promise<CreateResultInterface> {

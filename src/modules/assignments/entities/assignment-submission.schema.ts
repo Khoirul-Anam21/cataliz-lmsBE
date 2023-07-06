@@ -1,0 +1,68 @@
+import { IDatabaseAdapter } from "@src/database/connection";
+
+export const name = "assignmetSubmission";
+
+const isExists = async (db: IDatabaseAdapter) => {
+  const collections = (await db.listCollections()) as [];
+  return collections.some(function (el: any) {
+    return el.name === name;
+  });
+};
+
+export async function createCollection(db: IDatabaseAdapter) {
+  try {
+    if (!(await isExists(db))) {
+      await db.createCollection(name);
+    }
+
+    await db.updateSchema(name, {
+      bsonType: "object",
+      properties: {
+        user_id: {
+          bsonType: "ObjectId",
+          description: "must be a valid id",
+        },
+        assignment_id: {
+          bsonType: "ObjectId",
+          description: "must be a valid id",
+        },
+        submission: {
+          bsonType: "string",
+          description: "must be a string",
+        },
+        isGraded: {
+          bsonType: "boolean",
+          description: "must be a boolean",
+        },
+        score: {
+          bsonType: "number",
+          description: "must be a number",
+        },
+      },
+    });
+    await db.createIndex(
+      name,
+      { email: -1 },
+      {
+        unique: true,
+        collation: {
+          locale: "en",
+          strength: 2,
+        },
+      }
+    );
+    await db.listCollections();
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function dropCollection(db: IDatabaseAdapter) {
+  try {
+    if (await isExists(db)) {
+      await db.dropCollection(name);
+    }
+  } catch (error) {
+    throw error;
+  }
+}

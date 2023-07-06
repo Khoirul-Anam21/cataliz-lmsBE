@@ -1,12 +1,10 @@
 import { Router } from "express";
+import * as authController from "../auth/controllers/index.js"
 import * as controller from "./controllers/index.js";
 
-const router = Router();
+const announcementRouter = Router();
 
-router.get("/", controller.readMany);
-router.get("/:id", controller.read);
-router.post("/", controller.invite);
-router.patch("/:id", controller.update);
-router.delete("/:id", controller.destroy);
+announcementRouter.get("/", authController.authorizeCommon, controller.readMany);
+announcementRouter.post("/", authController.authorizeFacil, controller.create);
 
-export default router;
+export default announcementRouter;

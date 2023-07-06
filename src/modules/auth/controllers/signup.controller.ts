@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { validate } from "../request/signin.request.js";
+import { validateSignUp } from "../request/signup.request.js";
 import { SignupUserService } from "../services/signup.service.js";
 import { db } from "@src/database/database.js";
 
 export const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    validate(req.body);
+    validateSignUp(req.body);
 
     const signupUserService = new SignupUserService(db);
 

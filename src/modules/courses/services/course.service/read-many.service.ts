@@ -6,10 +6,16 @@ export class ReadManyCourseService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(limit: any = 20, page: any = 1, category?: any) {
+  public async handle(limit: any = 20, page: any = 1, categoryQuery?: any, searchQuery?: any) {
+    const filter = !searchQuery ?
+      { published: true } :
+      !categoryQuery ?
+        { published: true, title: { $regex: new RegExp(searchQuery, 'i') } } : // searching with regex
+        { published: true, category: categoryQuery, title: { $regex: new RegExp(searchQuery, 'i') } };
+
     const iQuery: QueryInterface = {
       fields: "",
-      filter: { category },
+      filter,
       page: page,
       pageSize: limit,
       sort: "",

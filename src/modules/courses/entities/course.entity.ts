@@ -1,16 +1,20 @@
 import { ObjectId } from "mongodb";
-import { UserInterface } from "@src/modules/users/entities/user.entity";
+import { CourseContentInterface } from "./course-content.entity";
+import { UserDisplayInterface } from "@src/modules/users/entities/user-display.entity.js";
 
 export interface CourseInterface {
   _id?: number | ObjectId;
-  user?: UserInterface;
+  facilitator?: UserDisplayInterface;
   thumbnail?: string;
   title?: string;
-  category_id?: number | ObjectId;
+  category?: string;
   purpose?: string[];
   published?: boolean;
   description?: string;
   totalDuration?: number;
+  content?: number;
+  contents?: CourseContentInterface[]
+  certificate?: null
 }
 
 export class CourseEntity {
@@ -20,3 +24,4 @@ export class CourseEntity {
     this.course = course;
   }
 }
+

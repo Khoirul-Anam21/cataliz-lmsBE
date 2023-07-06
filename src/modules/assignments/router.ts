@@ -1,12 +1,16 @@
 import { Router } from "express";
+import multer from "multer";
+import * as authController from "../auth/controllers/index.js";
 import * as controller from "./controllers/index.js";
 
-const router = Router();
+const upload = multer({ dest: 'uploads/' });
 
-router.get("/", controller.readMany);
-router.get("/:id", controller.read);
-router.post("/", controller.invite);
-router.patch("/:id", controller.update);
-router.delete("/:id", controller.destroy);
 
-export default router;
+const assignmentRouter = Router();
+
+assignmentRouter.get("/", authController.authorizeFacil, controller.readMany);
+assignmentRouter.post("/", authController.authorizeFacil, controller.create);
+assignmentRouter.post("/submit/:id", upload.single('assignment'), authController.authorizeStudent, controller.submitAssignment);
+assignmentRouter.patch("/grade/:submissionId", authController.authorizeFacil, controller.gradeAssignment);
+
+export default assignmentRouter;

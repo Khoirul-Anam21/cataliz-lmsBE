@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { ReadFacilitatorReportService } from "../services/read-facil.service.js";
 import { db } from "@src/database/database.js";
 import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity.js";
-import { validateIdParams } from "@src/utils/params.validator.js";
 
 export const readFacilReport = async (req: Request, res: Response, next: NextFunction) => {
   try {

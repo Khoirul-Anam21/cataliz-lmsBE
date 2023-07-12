@@ -22,11 +22,12 @@ export class UpdateUserService {
       fileUrl = fileUpload.url;
       await deleteFileAfterUpload(photo.path)
     }
-    if(!fileUrl){
+    if(!photo){
       await userRepository.update(id, {
         username,
         job,
       });
+      return {};
     }
     await userRepository.update(id, {
       username,
@@ -34,5 +35,5 @@ export class UpdateUserService {
       photo: fileUrl
     });
     return {};
-  }
+  } 
 }

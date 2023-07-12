@@ -11,10 +11,7 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
 
     const result = await signupUserService.handle(req.body.username, req.body.email, req.body.password);
 
-    res.status(201).json({
-      id: result.id,
-      acknowledged: result.acknowledged,
-    });
+    res.status(201).json(result);
   } catch (error) {
     next(error);
   }

@@ -26,9 +26,22 @@ export class UpdateCourseContentService {
     if (contentIndex === -1 || !contents) throw new ApiError(404, { msg: "content not found" });
 
     const isMaterial = material !== undefined;
-    
+
     let videoMaterial;
     if (isMaterial) videoMaterial = await uploadAndReplaceVideo(contents, contentIndex, material);
+
+    if (!material && !reading) {
+      contents[contentIndex] = {
+        ...contents[contentIndex],
+        title,
+        description: description,
+      }
+
+      await courseRepository.update(course_id, {
+        contents
+      });
+      return {};
+    }
 
     contents[contentIndex] = {
       ...contents[contentIndex],

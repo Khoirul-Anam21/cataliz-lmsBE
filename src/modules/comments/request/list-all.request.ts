@@ -3,7 +3,7 @@ import Validatorjs from "validatorjs";
 
 export const validateReadManyComments = (body: any) => {
   const validation = new Validatorjs(body, {
-    course_id: "required",
+    id: "required|size:24",
   });
 
   if (validation.fails()) {

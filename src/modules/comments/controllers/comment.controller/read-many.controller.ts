@@ -6,10 +6,10 @@ import { db } from "@src/database/database.js";
 
 export const readMany = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    validateReadManyComments(req.body)
+    validateReadManyComments(req.params)
     const readManyCommentsService = new ReadManyCommentsService(db);
 
-    const result = await readManyCommentsService.handle(req.body.course_id);
+    const result = await readManyCommentsService.handle(req.params.id);
 
     res.status(200).json(result);
   } catch (error) {

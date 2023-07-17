@@ -5,6 +5,7 @@ import DatabaseConnection from "@src/database/connection.js";
 import { CategoryInterface } from "@src/modules/categories/entities/category.entity.js";
 import { CategoryRepository } from "@src/modules/categories/repositories/category.repository.js";
 import uploader, { deleteFileAfterUpload } from "@src/services/cloudinary-storage/index.js";
+import { validateCategoryId } from "@src/utils/params.validator.js";
 import { getCloudinaryPublicId } from "@src/utils/url_public-id.js";
 
 export class UpdateCourseService {
@@ -19,8 +20,12 @@ export class UpdateCourseService {
     const course: CourseInterface = await courseRepository.read(id);
     if (!course) throw new ApiError(404, { msg: "course not found" });
 
-    const categoryData: CategoryInterface = await categoryRepository.read(category_id ?? "");
-    const category = categoryData.name;
+    let category;
+    if(category_id){
+      validateCategoryId({ category_id });
+      const categoryData: CategoryInterface = await categoryRepository.read(category_id ?? "");
+      category = categoryData.name;
+    }
 
     if (thumbnail) {
       const cldPublicId = getCloudinaryPublicId(course.thumbnail ?? "");

@@ -3,7 +3,7 @@ import { ReadManyCourseParticipantService } from "../../services/course.service/
 import { db } from "@src/database/database.js";
 import { validateIdParams } from "@src/utils/params.validator.js";
 
-export const readManyParticipant = async (req: Request, res: Response, next: NextFunction) => {
+export const readManyCourseParticipant = async (req: Request, res: Response, next: NextFunction) => {
   try {
 
     validateIdParams(req.params);

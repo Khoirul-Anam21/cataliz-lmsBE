@@ -12,9 +12,6 @@ export class ReadManyCourseParticipantService {
     // import courseParticipant
     const courseParticipantRepository = new CourseParticipantRepository(this.db);
 
-    const courseParticipant = await courseParticipantRepository.read(id);
-    if(!courseParticipant) throw new ApiError(404, { msg: "participant not found" })
-
     // pipeline
     const pipeline = [
       {
@@ -59,6 +56,8 @@ export class ReadManyCourseParticipantService {
 
     // aggregate
     const results: any = await courseParticipantRepository.aggregate(pipeline, iQuery);
+
+    if (!results) throw new ApiError(404, { msg: 'failed to get participants' });
 
     // parse result
     const participants = results.data.map((user: any) => ({ 

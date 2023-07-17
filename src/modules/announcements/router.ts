@@ -4,7 +4,7 @@ import * as controller from "./controllers/index.js";
 
 const announcementRouter = Router();
 
-announcementRouter.get("/", authController.authorizeCommon, controller.readMany);
+announcementRouter.get("/course/:id", authController.authorizeCommon, controller.readMany);
 announcementRouter.post("/", authController.authorizeFacil, controller.create);
 
 export default announcementRouter;

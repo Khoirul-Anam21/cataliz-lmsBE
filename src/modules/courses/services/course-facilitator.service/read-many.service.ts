@@ -18,39 +18,41 @@ export class ReadManyCourseFacilService {
     const pipeline = [
       {
         '$match': {
+          'role': 'facilitator', 
           '_id': user_id
         }
       }, {
         '$lookup': {
-          'from': 'courses',
-          'localField': '_id',
-          'foreignField': 'facilitator._id',
+          'from': 'courses', 
+          'localField': '_id', 
+          'foreignField': 'facilitator._id', 
           'as': 'courseData'
         }
       }, {
         '$unwind': {
-          'path': '$courseData',
-          'includeArrayIndex': 'string',
+          'path': '$courseData', 
+          'includeArrayIndex': 'string', 
           'preserveNullAndEmptyArrays': false
         }
       }, {
         '$project': {
-          'courseData': 1,
+          'courseData': 1, 
           '_id': 0
         }
       }, {
         '$lookup': {
-          'from': 'courseParticipant',
-          'localField': 'courseData._id',
-          'foreignField': 'course_id',
+          'from': 'courseParticipant', 
+          'localField': 'courseData._id', 
+          'foreignField': 'course_id', 
           'as': 'participant'
         }
       }, {
         '$project': {
-          'courseData._id': 1,
-          'courseData.thumbnailPath': 1,
-          'courseData.title': 1,
-          'courseData.category_id': 1,
+          'courseData._id': 1, 
+          'courseData.thumbnail': 1, 
+          'courseData.title': 1, 
+          'courseData.category': 1, 
+          'courseData.published': 1, 
           'participant': 1
         }
       }, {
@@ -73,16 +75,19 @@ export class ReadManyCourseFacilService {
     };
     // call agregate
     const result: any = await userRepository.aggregate(pipeline, iQuery);
+    if (!result) throw new ApiError(404, { msg: 'failed to get courses' });
+
     // result
     const coursesData = result.data;
     const courses = coursesData.map((course: any) => ({
        _id: course.courseData._id, 
        title: course.courseData.title, 
-       category_id: course.courseData.category_id, 
-       thumbnailPath: course.courseData.thumbnailPath, 
+       category_id: course.courseData.category, 
+       thumbnailPath: course.courseData.thumbnail, 
+       published: course.courseData.published, 
        studentCount: course.courseData.studentCount 
     }));
-    
+     
     const pagination = result.pagination;
 
     return {courses, pagination}; 

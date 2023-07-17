@@ -6,7 +6,7 @@ import * as commentController from "./controllers/comment.controller/index.js";
 const commentRouter = Router();
 
 
-commentRouter.get('/', authController.authorizeCommon, commentController.readMany);
+commentRouter.get('/course/:id', authController.authorizeCommon, commentController.readMany);
 commentRouter.post('/', authController.authorizeCommon, commentController.create);
 commentRouter.post('/replies', authController.authorizeCommon, commentReplyController.create);
 commentRouter.put('/:id', authController.authorizeCommon, commentController.update);

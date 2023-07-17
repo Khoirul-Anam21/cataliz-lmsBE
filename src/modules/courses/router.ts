@@ -14,7 +14,7 @@ const courseContentRouter = Router();
 
 // Course
 courseRouter.get("/", controller.readMany); // done tinggal category
-courseRouter.get("/:id", authController.authorizeStudent, controller.read);   // tambah jika auth maka tampil sebagian
+courseRouter.get("/:id", authController.authorizeCommon, controller.read);   // tambah jika auth maka tampil sebagian
 courseRouter.post("/", authController.authorizeFacil, upload.single('thumbnail'), controller.create);   // done
 courseRouter.put("/:id", authController.authorizeFacil, upload.single('thumbnail'), controller.update);  // done
 courseRouter.delete("/:id", authController.authorizeFacil, controller.destroy);  // done
@@ -22,7 +22,7 @@ courseRouter.put("/course-publish/:id", controller.publishCourse);    // done
 courseRouter.get("/student/learnings", authController.authorizeStudent, cParticipantController.readMany);  // done
 courseRouter.post("/student/learnings", authController.authorizeStudent, cParticipantController.create); // done
 courseRouter.get("/facil/learnings", authController.authorizeFacil, cFacilitatorController.readMany); // done
-courseRouter.get("/course-participant/:id", authController.authorizeFacil, controller.readManyParticipant); // done
+courseRouter.get("/course-participant/:id", authController.authorizeFacil, controller.readManyCourseParticipant); // done
 courseRouter.patch("/course-participant/:id", authController.authorizeStudent, cParticipantController.completeCourseContent)
 
 // course content

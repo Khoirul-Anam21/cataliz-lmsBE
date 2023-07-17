@@ -9,7 +9,7 @@ export const readMany = async (req: Request, res: Response, next: NextFunction) 
     const readMadyAssignmentService = new ReadManyAssignmentService(db)
 
     // handle
-    const result = await readMadyAssignmentService.handle(req.body.content_id);
+    const result = await readMadyAssignmentService.handle(req.params.id);
 
     res.status(200).json(result);
   } catch (error) {

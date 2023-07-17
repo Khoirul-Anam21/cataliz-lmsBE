@@ -21,7 +21,7 @@ export class ReadCourseService {
       _id: result._id,
       facilitator: result.facilitator,
       title: result.title,
-      category_id: result.category_id,
+      category: result.category,
       thumbnail: result.thumbnail,
       description: result.description,
       published: result.published,

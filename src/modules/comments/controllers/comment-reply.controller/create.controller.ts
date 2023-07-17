@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { validateCreateComment } from "../../request/create-comment.request.js";
+import { validateCreateReply } from "../../request/create-reply.request.js";
 import { CreateCommentReplyService } from "../../services/comment-reply.service/create.service.js";
 import { db } from "@src/database/database.js";
 import { UserAuthInterface } from "@src/modules/users/entities/user-auth.entity.js";
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        validateCreateComment(req.body);
+        validateCreateReply(req.body);
 
         // credential   
         const userCredential: UserAuthInterface = req.res?.locals.credential;

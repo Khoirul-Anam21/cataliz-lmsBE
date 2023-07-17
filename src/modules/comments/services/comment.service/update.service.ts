@@ -22,7 +22,7 @@ export class UpdateCommentService {
     if (ownedComment.user_id?.toString() !== user_id) throw new ApiError(401, { msg: 'Comment not found or unauthorized to modify ' });
 
     // handle
-    await commentRepository.update(id, { comment });
+    await commentRepository.update(id, { comment: comment ?? ownedComment.comment });
     return {};
   }
 }

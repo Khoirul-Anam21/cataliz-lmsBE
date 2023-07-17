@@ -39,22 +39,22 @@ export class UpdateCourseService {
       contents?.map(content => content.thumbnail = uploadResult.url);
  
       await courseRepository.update(id, {
-        title,
-        category: category ?? undefined,
-        purpose,
+        title: title ?? course.title,
+        category: category ?? course.category,
+        purpose: purpose ?? course.purpose,
         contents,
         thumbnail: uploadResult.url,
-        description,
+        description: description ?? course.description,
       });
 
       return {}
     }
 
     await courseRepository.update(id, {
-      title,
-      category: category ?? undefined,
-      purpose,
-      description,
+      title: title ?? course.title,
+      category: category ?? course.category,
+      purpose: purpose ?? course.purpose,
+      description: description ?? course.description,
     });
 
     return {};

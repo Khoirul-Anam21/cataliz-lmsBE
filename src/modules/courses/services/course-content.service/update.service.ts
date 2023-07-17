@@ -33,8 +33,8 @@ export class UpdateCourseContentService {
     if (!material && !reading) {
       contents[contentIndex] = {
         ...contents[contentIndex],
-        title,
-        description: description,
+        title: title ?? contents[contentIndex].title,
+        description: description ?? contents[contentIndex].description,
       }
 
       await courseRepository.update(course_id, {
@@ -45,8 +45,8 @@ export class UpdateCourseContentService {
 
     contents[contentIndex] = {
       ...contents[contentIndex],
-      title,
-      description: description ?? "",
+      title: title ?? contents[contentIndex].title,
+      description: description ?? contents[contentIndex].description,
       reading: isMaterial ? "" : reading,
       duration: isMaterial ? videoMaterial?.duration : 0,
       material: isMaterial ? videoMaterial?.url : "",

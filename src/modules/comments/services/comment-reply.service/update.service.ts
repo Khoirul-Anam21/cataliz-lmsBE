@@ -20,7 +20,7 @@ export class UpdateCommentReplyService {
     const ownedCommentReply: CommentReplyInterface = await commentReplyRepository.read(id);
     if (ownedCommentReply.user_id?.toString() !== user_id) throw new ApiError(401, { msg: 'Comment not found or unauthorized to modify ' });
 
-    await commentReplyRepository.update(id, { comment })
+    await commentReplyRepository.update(id, { comment: comment ?? ownedCommentReply.comment })
     return {};
   }
 }

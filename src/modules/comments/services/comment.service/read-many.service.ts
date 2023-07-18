@@ -27,14 +27,14 @@ export class ReadManyCommentsService {
         }
       }, {
         '$lookup': {
-          'from': 'users', 
-          'localField': 'user_id', 
-          'foreignField': '_id', 
+          'from': 'users',
+          'localField': 'user_id',
+          'foreignField': '_id',
           'as': 'user'
         }
       }, {
         '$unwind': {
-          'path': '$user', 
+          'path': '$user',
           'preserveNullAndEmptyArrays': false
         }
       }, {
@@ -47,7 +47,7 @@ export class ReadManyCommentsService {
     // query
     const iQuery: QueryInterface = {
       fields: "",
-      filter: {}, 
+      filter: {},
       page: 1,
       pageSize: 999,
       sort: "",
@@ -55,38 +55,43 @@ export class ReadManyCommentsService {
 
     // aggregate
     const resultComment: any = await commentRepository.aggregate(commentPipeline, iQuery);
-    const commentData: any = resultComment.data[0];
+    const commentData: any = resultComment.data;
 
-    const replyPipeline = [
-      {
-        '$match': {
-          'comment_id': new ObjectId(commentData._id)
+    const commentsWithReplies = await Promise.all(commentData.map(async (comment: any) => {
+      const replyPipeline = [
+        {
+          '$match': {
+            'comment_id': new ObjectId(comment._id)
+          }
+        }, {
+          '$lookup': {
+            'from': 'users',
+            'localField': 'user_id',
+            'foreignField': '_id',
+            'as': 'user'
+          }
+        }, {
+          '$unwind': {
+            'path': '$user',
+            'preserveNullAndEmptyArrays': false
+          }
+        }, {
+          '$unset': [
+            'user_id', 'user.email', 'user.password', 'user.role', 'user.createdAt', 'user.updatedAt', 'user.accessToken', 'user.refreshToken'
+          ]
         }
-      }, {
-        '$lookup': {
-          'from': 'users', 
-          'localField': 'user_id', 
-          'foreignField': '_id', 
-          'as': 'user'
-        }
-      }, {
-        '$unwind': {
-          'path': '$user', 
-          'preserveNullAndEmptyArrays': false
-        }
-      }, {
-        '$unset': [
-          'user_id', 'user.email', 'user.password', 'user.role', 'user.createdAt', 'user.updatedAt', 'user.accessToken', 'user.refreshToken'
-        ]
+      ];
+
+      const resultCommentReply: any = await commentReplyRepository.aggregate(replyPipeline, iQuery);
+      const commentReplyData: any = resultCommentReply.data;
+
+      return {
+        ...comment,
+        replies: commentReplyData
       }
-    ];
 
-    const resultCommentReply: any = await commentReplyRepository.aggregate(replyPipeline, iQuery);
-    const commentReplyData: any = resultCommentReply.data;
+    }))
     // return finally
-    return {
-      ...commentData,
-      replies: commentReplyData
-    }
+    return commentsWithReplies
   }
 }

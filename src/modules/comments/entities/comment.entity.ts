@@ -5,7 +5,7 @@ export interface CommentInterface {
     user_id?: number | ObjectId; //fk
     course_id?: number | ObjectId; //fk
     comment?: string;
-    content_id?: number | ObjectId; //fk
+    content_id?: number | ObjectId | null; //fk
   }
 
 export class CommentEntity {

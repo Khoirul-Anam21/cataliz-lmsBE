@@ -11,7 +11,7 @@ export class CreateCommentService {
     constructor(db: DatabaseConnection) {
         this.db = db;
     }
-    public async handle(user_id: string, course_id: string, content_id: string, comment: string) {
+    public async handle(user_id: string, course_id: string, comment: string, content_id?: string) {
         // init repo
         const commentRepository = new CommentRepository(this.db);
         const userRepository = new UserRepository(this.db);
@@ -27,7 +27,7 @@ export class CreateCommentService {
             _id: new ObjectId(),
             user_id: new ObjectId(user_id),
             course_id: new ObjectId(course_id),
-            content_id: new ObjectId(content_id),
+            content_id: content_id ? new ObjectId(content_id) : null,
             comment
         }
 

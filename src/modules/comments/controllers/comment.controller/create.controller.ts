@@ -17,8 +17,8 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
         const result = await createCommentService.handle(
             userCredential._id.toString(),
             req.body.course_id,
-            req.body.content_id,
-            req.body.comment
+            req.body.comment,
+            req.body.content_id
         );
 
         res.status(201).json({

@@ -3,7 +3,7 @@ import Validatorjs from "validatorjs";
 
 export const validateIdParams = (param:any) => {
   const validation = new Validatorjs(param, {
-    id: "required",
+    id: "required|size:24",
   });
 
   if (validation.fails()) {

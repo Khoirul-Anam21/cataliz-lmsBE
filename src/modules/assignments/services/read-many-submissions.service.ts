@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import { AssignmentRepository } from "../repositories/assignment.repository.js";
 import DatabaseConnection, { QueryInterface } from "@src/database/connection.js";
 
-export class ReadManyAssignmentService {
+export class ReadManySubmissionsService {
   private db: DatabaseConnection;
   constructor(db: DatabaseConnection) {
     this.db = db;

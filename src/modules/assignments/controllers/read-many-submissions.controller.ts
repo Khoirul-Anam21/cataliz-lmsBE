@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { ReadManyAssignmentService } from "../services/read-many.service.js";
+import { ReadManySubmissionsService } from "../services/read-many-submissions.service.js";
 import { db } from "@src/database/database.js";
 
 
-export const readMany = async (req: Request, res: Response, next: NextFunction) => {
+export const readManySubmissions = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // call service
-    const readMadyAssignmentService = new ReadManyAssignmentService(db)
+    const readMadyAssignmentService = new ReadManySubmissionsService(db)
 
     // handle
     const result = await readMadyAssignmentService.handle(req.params.id);

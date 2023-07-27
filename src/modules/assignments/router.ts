@@ -8,8 +8,12 @@ const upload = multer({ dest: 'uploads/' });
 
 const assignmentRouter = Router();
 
-assignmentRouter.get("/submissions/courseContent/:id", authController.authorizeFacil, controller.readMany);
-assignmentRouter.get("/courseContent/:id", authController.authorizeStudent, controller.read);
+assignmentRouter.get("/submissions-facil/courseContent/:id", authController.authorizeFacil, controller.readManySubmissions); // get submission for facil
+assignmentRouter.get("/submissions-participant/courseContent/:id", authController.authorizeStudent, controller.readParticipantSubmission); // get submission status for student
+
+assignmentRouter.get("/participant/courseContent/:id", authController.authorizeStudent, controller.read); // get assignmet for participant
+assignmentRouter.get("/facil/courseContent/:id", authController.authorizeFacil, controller.readFacil); // get assignment for facil
+
 assignmentRouter.post("/", authController.authorizeFacil, controller.create);
 assignmentRouter.post("/submit/:id", upload.single('assignment'), authController.authorizeStudent, controller.submitAssignment);
 assignmentRouter.patch("/grade/:submissionId", authController.authorizeFacil, controller.gradeAssignment);

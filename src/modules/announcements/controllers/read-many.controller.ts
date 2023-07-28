@@ -5,7 +5,7 @@ import { db } from "@src/database/database.js";
 export const readMany = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const readManyAnnouncementService = new ReadManyAnnouncementService(db);
-    const result = await readManyAnnouncementService.handle(req.params._id, req.query.limit, req.query.page);
+    const result = await readManyAnnouncementService.handle(req.params.id, req.query.limit, req.query.page);
     res.status(200).json(result);
   } catch (error) {
     next(error);

@@ -9,7 +9,7 @@ export class ReadManyAnnouncementService {
   constructor(db: DatabaseConnection) {
     this.db = db;
   }
-  public async handle(course_id: string, limit: any = 10, page: any = 1) {
+  public async handle(course_id: string, limit: any = 999, page: any = 1) {
     const announcementRepository = new AnnouncementRepository(this.db);
     const courseRepository = new CourseRepository(this.db);
 
@@ -17,15 +17,34 @@ export class ReadManyAnnouncementService {
     if(!course) throw new ApiError(404, { msg: "course not found"} )
     const iQuery: QueryInterface = {
       fields: "",
-      filter: { course_id: new ObjectId(course_id) }, // hanya yg terpublish yg tampil
+      filter: { }, 
       page: page,
       pageSize: limit,
       sort: "",
     };
-    const result = await announcementRepository.readMany(iQuery)
+    const pipeline = [
+      {
+        '$lookup': {
+          'from': 'users', 
+          'localField': 'user_id', 
+          'foreignField': '_id', 
+          'as': 'user'
+        }
+      }, {
+        '$unwind': {
+          'path': '$user', 
+          'preserveNullAndEmptyArrays': false
+        }
+      }, {
+        '$unset': [
+          'user.accessToken', 'user.refreshToken', 'user.createdAt', 'user.updatedAt', 'user.password', 'user.email', 'user_id'
+        ]
+      }
+    ]
+    const result: any = await announcementRepository.aggregate(pipeline, iQuery);
     return {
       announcements: result.data,
-      pagination: result.pagination,
+      pagination: result.pagination, 
     };
   }
 }

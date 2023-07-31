@@ -9,7 +9,7 @@ export const readParticipantCourseReport = async (req: Request, res: Response, n
     validateIdParams(req.params);
     const userCredential: UserAuthInterface = req.res?.locals.credential;
     const readParticipantCourseReportService = new ReadParticipantCourseReportService(db);
-    const result = await readParticipantCourseReportService.handle(req.params.id, userCredential._id);
+    const result = await readParticipantCourseReportService.handle(req.params.id, userCredential._id.toString());
     res.status(200).json(result);
   } catch (error) {
     next(error);

@@ -3,4 +3,5 @@ export { signup } from "./signup.controller.js";
 export { authorizeStudent } from './authorize-student.controller.js';
 export { authorizeFacil } from './authorize-facil.controller.js';
 export { authorizeCommon } from './authorize-common.controller.js';
+export { authorizeOptional } from './authorize-optional.controller.js';
 export { verifyToken } from "./verify-token.controller.js";

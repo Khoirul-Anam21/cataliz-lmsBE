@@ -14,7 +14,7 @@ const courseContentRouter = Router();
 
 // Course
 courseRouter.get("/", controller.readMany); // done tinggal category
-courseRouter.get("/:id", authController.authorizeCommon, controller.read);   // tambah jika auth maka tampil sebagian
+courseRouter.get("/:id", authController.authorizeOptional, controller.read);  
 courseRouter.post("/", authController.authorizeFacil, upload.single('thumbnail'), controller.create);   // done
 courseRouter.put("/:id", authController.authorizeFacil, upload.single('thumbnail'), controller.update);  // done
 courseRouter.delete("/:id", authController.authorizeFacil, controller.destroy);  // done

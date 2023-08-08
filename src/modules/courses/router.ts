@@ -23,7 +23,8 @@ courseRouter.get("/student/learnings", authController.authorizeStudent, cPartici
 courseRouter.post("/student/learnings", authController.authorizeStudent, cParticipantController.create); // done
 courseRouter.get("/facil/learnings", authController.authorizeFacil, cFacilitatorController.readMany); // done
 courseRouter.get("/course-participant/:id", authController.authorizeFacil, controller.readManyCourseParticipant); // done
-courseRouter.patch("/course-participant/:id", authController.authorizeStudent, cParticipantController.completeCourseContent)
+courseRouter.get("/course-participation/course/:id", authController.authorizeStudent, cParticipantController.readProgress);
+courseRouter.patch("/course-participation/:id", authController.authorizeStudent, cParticipantController.completeCourseContent);
 
 // course content
 courseContentRouter.get("/student/:id", authController.authorizeStudent, courseContentController.readCourseContentParticipant);

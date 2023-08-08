@@ -3,7 +3,7 @@ import { CourseRepository } from "../../repositories/course.repository.js";
 import DatabaseConnection, { QueryInterface } from "@src/database/connection.js";
 import { UserRepository } from "@src/modules/users/repositories/user.repository.js";
 
-export class ReadManyCourseParticipantService {
+export class ReadManyCourseParticipantService { // COURSE YANG SEDANG DIIKUTI
   private db: DatabaseConnection;
   constructor(db: DatabaseConnection) {
     this.db = db;

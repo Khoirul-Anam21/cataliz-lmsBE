@@ -24,6 +24,10 @@ export class ReadManyAnnouncementService {
     };
     const pipeline = [
       {
+        '$match': {
+          'course_id': new ObjectId(course_id)
+        }
+      }, {
         '$lookup': {
           'from': 'users', 
           'localField': 'user_id', 

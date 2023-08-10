@@ -1,4 +1,5 @@
 import { ApiError } from "@point-hub/express-error-handler";
+import { ObjectId } from "mongodb";
 import { CourseRepository } from "../../repositories/course.repository.js";
 import DatabaseConnection, { QueryInterface } from "@src/database/connection.js";
 import { UserRepository } from "@src/modules/users/repositories/user.repository.js";
@@ -18,45 +19,46 @@ export class ReadManyCourseParticipantService { // COURSE YANG SEDANG DIIKUTI
     const pipeline = [
       {
         '$lookup': {
-          'from': 'courseParticipant',
-          'localField': '_id',
-          'foreignField': 'course_id',
+          'from': 'courseParticipant', 
+          'localField': '_id', 
+          'foreignField': 'course_id', 
           'as': 'course_in'
         }
       }, {
+        '$unwind': {
+          'path': '$course_in', 
+          'preserveNullAndEmptyArrays': false
+        }
+      }, {
         '$lookup': {
-          'from': 'users',
-          'localField': 'course_in.user_id',
-          'foreignField': '_id',
+          'from': 'users', 
+          'localField': 'course_in.user_id', 
+          'foreignField': '_id', 
           'as': 'participant'
         }
       }, {
-        '$match': {
-          'participant._id': user_id
+        '$unwind': {
+          'path': '$participant', 
+          'preserveNullAndEmptyArrays': false
         }
-      },
-      {
+      }, {
+        '$match': {
+          'participant._id': new ObjectId(user_id)
+        }
+      }, {
         '$addFields': {
           'participation_id': '$course_in._id'
         }
-      },
-      {
-        '$unwind': {
-          'path': '$participation_id',
-          'includeArrayIndex': 'string',
-          'preserveNullAndEmptyArrays': false,
-        }
-      },
-      {
-        '$project': { 
-          '_id': 1,
+      }, {
+        '$project': {
+          '_id': 1, 
           'participation_id': 1, 
-          'facilitator': 1,
-          'thumbnail': 1,
-          'title': 1,
+          'facilitator': 1, 
+          'thumbnail': 1, 
+          'title': 1, 
           'category': 1
         }
-      },
+      }
     ]
 
     const iQuery: QueryInterface = {
